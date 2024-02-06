@@ -1,5 +1,6 @@
 from django.db import models
 from .card import Card
+from ..game_config import EVENT_IMAGE_PLACEHOLDER
 
 LOCATION_CHOICES = [
     ("deck", "Deck"),
@@ -10,7 +11,7 @@ LOCATION_CHOICES = [
 FORTUNE_CHOICES = [
     ("positive", "Positive"),
     ("negative", "Negative"),
-    ("neutral", "Neutral"),
+    # ("neutral", "Neutral"),
 ]
 TARGET_CHOICES = [
     ("player", "Player"),
@@ -25,14 +26,16 @@ ITEM_CHOICES = [
 
 class EventCard(Card):
     location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default="deck")
-    fortune = models.CharField(max_length=20, choices=FORTUNE_CHOICES)
-    target = models.CharField(max_length=20, choices=TARGET_CHOICES)
-    item = models.CharField(max_length=20, choices=ITEM_CHOICES)
+    fortune = models.CharField(max_length=20, choices=FORTUNE_CHOICES, blank=True)
+    target = models.CharField(max_length=20, choices=TARGET_CHOICES, blank=True)
+    item = models.CharField(max_length=20, choices=ITEM_CHOICES, blank=True)
 
     # effects
-    confiscation = models.BooleanField()
-    protection = models.BooleanField()
+    confiscation = models.BooleanField(blank=True)
+    protection = models.BooleanField(blank=True)
 
-    player_extra_profit = models.IntegerField()
-    trader_extra_profit = models.IntegerField()
-    product_extra_profit = models.IntegerField()
+    player_extra_profit = models.IntegerField(blank=True, null=True)
+    trader_extra_profit = models.IntegerField(blank=True, null=True)
+    product_extra_profit = models.IntegerField(blank=True, null=True)
+
+    image = models.CharField(max_length=100, blank=True, default=EVENT_IMAGE_PLACEHOLDER)
