@@ -1,8 +1,9 @@
 from django.http import JsonResponse
 from app.models import Game, Player, Sector, ProductCard, EventCard
 
-def game_box(request):
-    game = Game.objects.get(pk=4)
+
+def game_box(request, game_id):
+    game = Game.objects.get(pk=game_id)
     players = Player.objects.filter(games=game)
     sectors = Sector.objects.filter(games=game)
     product_cards = ProductCard.objects.filter(games=game)
@@ -12,7 +13,8 @@ def game_box(request):
         'pk': game.pk,
         # add other game fields here
     }
-    players_data = [{'pk': player.pk, 'name': player.name, 'coins': player.coins, 'color': player.color } for player in players]
+    players_data = [{'pk': player.pk, 'name': player.name, 'coins': player.coins, 'color': player.color} for player in
+                    players]
     sectors_data = [{'pk': sector.pk, 'name': sector.name, 'description': sector.description} for sector in sectors]
     product_cards_data = [{
         'pk': card.pk,
