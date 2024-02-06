@@ -29,8 +29,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DEBUG'))
-
-ALLOWED_HOSTS = []
+DISABLE_COLLECTSTATIC = 1
 
 # Application definition
 
@@ -123,10 +122,16 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://*.lavron.dev',
+    'https://*.lavron.dev',
     'https://*.kotucheniy.com.ua',
     'http://localhost',
     'http://127.0.0.1'
+]
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.lavron.dev',
+    '.kotucheniy.com.ua',
 ]
 
 
@@ -134,17 +139,17 @@ if str(os.getenv('IS_LOCALHOST')) == 'True':
 
     from .settings_local import *
 
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATIC_URL = 'static/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    MEDIA_URL = '/media/'
-    STATICFILES_DIRS = (
-        os.path.join(os.path.dirname(__file__), "static"),
-    )
+    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    # STATIC_URL = 'static/'
+    # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    # MEDIA_URL = '/media/'
+    # STATICFILES_DIRS = (
+    #     os.path.join(os.path.dirname(__file__), "static"),
+    # )
 
-else:
-
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_DIRS = (
-        os.path.join(os.path.dirname(__file__), "static"),
-    )
+# else:
+#
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#     STATICFILES_DIRS = (
+#         os.path.join(os.path.dirname(__file__), "static"),
+#     )
