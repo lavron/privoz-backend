@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e72ea4ac-aef1-43a5-badb-0bedc3cfa06c" name="Changes" comment="update requirements.txt">
+    <list default="true" id="e72ea4ac-aef1-43a5-badb-0bedc3cfa06c" name="Changes" comment="Enhance models and adjust admin registration.">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/privoz/import.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/game_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/game_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/card.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/card.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/event_card.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/event_card.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/product_card.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/product_card.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/sector.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/sector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/privoz/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/privoz/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +160,7 @@
       <workItem from="1707210751291" duration="120000" />
       <workItem from="1707210907699" duration="48000" />
       <workItem from="1707210967018" duration="118000" />
-      <workItem from="1707211267210" duration="7266000" />
+      <workItem from="1707211267210" duration="7919000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -200,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707218976519</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Enhance models and adjust admin registration.">
+      <option name="closed" value="true" />
+      <created>1707222637373</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1707222637373</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +222,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="update requirements.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="update requirements.txt" />
+    <MESSAGE value="Enhance models and adjust admin registration." />
+    <option name="LAST_COMMIT_MESSAGE" value="Enhance models and adjust admin registration." />
   </component>
 </project>
