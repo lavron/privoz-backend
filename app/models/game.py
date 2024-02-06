@@ -9,6 +9,6 @@ class Game(models.Model):
     event_cards = models.ManyToManyField('EventCard', related_name='games')
 
     def __str__(self):
-        return self.pk + '. ' + self.players
+        return 'Game ' + str(self.pk)
 
 
