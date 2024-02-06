@@ -7,8 +7,7 @@ class Card(models.Model):
     image = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        caller = self._meta.model_name
-        return self.name + ' - ' + caller
+        return self.name
 
     class Meta:
         abstract = True
