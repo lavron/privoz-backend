@@ -29,7 +29,9 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DEBUG'))
-DISABLE_COLLECTSTATIC = 1
+
+
+
 
 # Application definition
 
@@ -114,7 +116,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = 'static/'
 
 # Default primary key field type
@@ -134,6 +141,7 @@ ALLOWED_HOSTS = [
     '.lavron.dev',
     '.kotucheniy.com.ua',
 ]
+
 
 
 if str(os.getenv('IS_LOCALHOST')) == 'True':
