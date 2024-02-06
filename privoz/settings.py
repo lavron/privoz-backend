@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -29,7 +30,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DEBUG'))
-
+IS_LOCALHOST = bool(os.getenv('IS_LOCALHOST'))
 
 
 
@@ -77,13 +78,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'privoz.wsgi.application'
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=str(os.getenv('DATABASE_URL')),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+if IS_LOCALHOST:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=str(os.getenv('DATABASE_URL')),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+
+elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
+    if os.getenv("DATABASE_URL", None) is None:
+        raise Exception("DATABASE_URL environment variable not defined")
+    DATABASES = {
+        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
