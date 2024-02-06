@@ -1,132 +1,198 @@
-from app.models import Sector
+from app.models import Sector, EventCard
 
-json_products = {
-    "sectors": [
-        {
-            "sector": "vegetables",
-            "products": [
-                {"productId": 1, "productName": "onion", "wholesalePrice": 2, "sellingPrice": 4, "profit": 2,
-                 "quantity_card": 16, "total_profit": 32, "product_sector": "vegetables", "imageSrc": "onion.svg",
-                 "legality": "legal"},
-                {"productId": 2, "productName": "zucchini", "wholesalePrice": 3, "sellingPrice": 6, "profit": 3,
-                 "quantity_card": 12, "total_profit": 36, "product_sector": "vegetables", "imageSrc": "zucchini.svg",
-                 "legality": "legal"},
-                {"productId": 3, "productName": "tomato", "wholesalePrice": 5, "sellingPrice": 9, "profit": 4,
-                 "quantity_card": 10, "total_profit": 40, "product_sector": "vegetables", "imageSrc": "tomato.svg"}
-            ]
-        },
-        {
-            "sector": "fruits",
-            "products": [
-                {"productId": 4, "productName": "apples", "wholesalePrice": 2, "sellingPrice": 4, "profit": 2,
-                 "quantity_card": 16, "total_profit": 32, "product_sector": "fruits", "imageSrc": "apples.svg",
-                 "legality": "legal"},
-                {"productId": 5, "productName": "grapes", "wholesalePrice": 3, "sellingPrice": 6, "profit": 3,
-                 "quantity_card": 12, "total_profit": 36, "product_sector": "fruits", "imageSrc": "grapes.svg",
-                 "legality": "legal"},
-                {"productId": 6, "productName": "strawberries", "wholesalePrice": 5, "sellingPrice": 9, "profit": 4,
-                 "quantity_card": 10, "total_profit": 40, "product_sector": "fruits", "imageSrc": "strawberries.svg"}
-            ]
-        },
-        {
-            "sector": "dairy",
-            "products": [
-                {"productId": 7, "productName": "milk", "wholesalePrice": 3, "sellingPrice": 6, "profit": 3,
-                 "quantity_card": 16, "total_profit": 48, "product_sector": "dairy", "imageSrc": "milk.svg",
-                 "legality": "legal"},
-                {"productId": 8, "productName": "feta cheese", "wholesalePrice": 5, "sellingPrice": 9, "profit": 4,
-                 "quantity_card": 12, "total_profit": 48, "product_sector": "dairy", "imageSrc": "feta_cheese.svg",
-                 "legality": "legal"},
-                {"productId": 9, "productName": "cheese", "wholesalePrice": 7, "sellingPrice": 12, "profit": 5,
-                 "quantity_card": 10, "total_profit": 50, "product_sector": "dairy", "imageSrc": "cheese.svg"}
-            ]
-        },
-        {
-            "sector": "fish",
-            "products": [
-                {"productId": 10, "productName": "anchovies", "wholesalePrice": 3, "sellingPrice": 6, "profit": 3,
-                 "quantity_card": 16, "total_profit": 48, "product_sector": "fish", "imageSrc": "anchovies.svg",
-                 "legality": "legal"},
-                {"productId": 11, "productName": "mackerel", "wholesalePrice": 5, "sellingPrice": 9, "profit": 4,
-                 "quantity_card": 12, "total_profit": 48, "product_sector": "fish", "imageSrc": "mackerel.svg",
-                 "legality": "legal"},
-                {"productId": 12, "productName": "salmon", "wholesalePrice": 7, "sellingPrice": 12, "profit": 5,
-                 "quantity_card": 10, "total_profit": 50, "product_sector": "fish", "imageSrc": "salmon.svg"}
-            ]
-        },
-        {
-            "sector": "meat",
-            "products": [
-                {"productId": 13, "productName": "chicken", "wholesalePrice": 5, "sellingPrice": 10, "profit": 5,
-                 "quantity_card": 10, "total_profit": 50, "product_sector": "meat", "imageSrc": "chicken.svg",
-                 "legality": "legal"},
-                {"productId": 14, "productName": "pork", "wholesalePrice": 7, "sellingPrice": 13, "profit": 6,
-                 "quantity_card": 7, "total_profit": 42, "product_sector": "meat", "imageSrc": "pork.svg",
-                 "legality": "legal"},
-                {"productId": 15, "productName": "sausage", "wholesalePrice": 9, "sellingPrice": 16, "profit": 7,
-                 "quantity_card": 4, "total_profit": 28, "product_sector": "meat", "imageSrc": "sausage.svg"}
-            ]
-        },
-        {
-            "sector": "household",
-            "products": [
-                {"productId": 16, "productName": "gloves", "wholesalePrice": 7, "sellingPrice": 12, "profit": 5,
-                 "quantity_card": 10, "total_profit": 50, "product_sector": "household", "imageSrc": "gloves.svg",
-                 "legality": "legal"},
-                {"productId": 17, "productName": "hats", "wholesalePrice": 9, "sellingPrice": 15, "profit": 6,
-                 "quantity_card": 7, "total_profit": 42, "product_sector": "household", "imageSrc": "hats.svg",
-                 "legality": "legal"},
-                {"productId": 18, "productName": "quilts", "wholesalePrice": 10, "sellingPrice": 18, "profit": 8,
-                 "quantity_card": 4, "total_profit": 32, "product_sector": "household", "imageSrc": "quilts.svg"}
-            ]
-        },
-        {
-            "sector": "illegal",
-            "products": [
-                {"productId": 19, "productName": "cigarettes", "wholesalePrice": 4, "sellingPrice": 9, "profit": 5,
-                 "quantity_card": 18, "total_profit": 90, "product_sector": "other", "imageSrc": "cigarettes.svg",
-                 "legality": "illegal"},
-                {"productId": 20, "productName": "beer", "wholesalePrice": 5, "sellingPrice": 12, "profit": 7,
-                 "quantity_card": 16, "total_profit": 112, "product_sector": "other", "imageSrc": "beer.svg",
-                 "legality": "illegal"},
-                {"productId": 21, "productName": "wine", "wholesalePrice": 6, "sellingPrice": 15, "profit": 9,
-                 "quantity_card": 14, "total_profit": 126, "product_sector": "other", "imageSrc": "wine.svg",
-                 "legality": "illegal"},
-                {"productId": 22, "productName": "vodka", "wholesalePrice": 7, "sellingPrice": 19, "profit": 12,
-                 "quantity_card": 12, "total_profit": 144, "product_sector": "other", "imageSrc": "vodka.svg",
-                 "legality": "illegal"},
-                {"productId": 23, "productName": "drugs", "wholesalePrice": 10, "sellingPrice": 25, "profit": 15,
-                 "quantity_card": 10, "total_profit": 150, "product_sector": "other", "imageSrc": "drugs.svg",
-                 "legality": "illegal"}
+json_event_cards = [
+    {
+        "id": "ev_card_fntr",
+        "title": "Federal Police",
+        "description": "Confiscate illegal goods plus a fine.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 5,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "trader",
+        "effect": [{"confiscation": "true"}, {"fine": [5]}, {"trader_action": "hold"}]
+    },
+    {
+        "id": "ev_card_mkt",
+        "title": "Mafia ('brothers') Karabas and Stas",
+        "description": "2 coins of donations for each seller.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 7,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "trader",
+        "effect": [{"confiscation": "false"}, {"fine": [2]}]
+    },
+    {
+        "id": "ev_card_pstr",
+        "title": "Prosecutor's Office",
+        "description": "Confiscation of illegal goods plus a fine.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 7,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "trader",
+        "effect": [{"confiscation": "true"}, {"fine": [2]}, {"trader_action": "hold"}]
+    },
+    {
+        "id": "ev_card_ses",
+        "title": "Sanitary Epidemiological Station",
+        "description": "2 coins of donations for each seller.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 7,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "trader",
+        "effect": [{"confiscation": "false"}, {"fine": [2]}]
+    },
+    {
+        "id": "ev_card_ff",
+        "title": "Firefighters",
+        "description": "2 coins of donations for each seller.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 7,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "trader",
+        "effect": [{"confiscation": "false"}, {"fine": [2]}]
+    },
+    {
+        "id": "ev_card_lpo",
+        "title": "Local Police Officer",
+        "description": "2 coins of donations for each seller.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 7,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "trader",
+        "effect": [{"confiscation": "true"}, {"fine": [2]}, {"trader_action": "hold"}]
+    },
+    {
+        "id": "ev_card_bgg",
+        "title": "Beggars",
+        "description": "-1 to the selling price.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 7,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "product",
+        "effect": [{"price_fine": [1]}]
+    },
+    {
+        "id": "ev_card_add",
+        "title": "Addicts (Narcos)",
+        "description": "-1 to the selling price.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 7,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "product",
+        "effect": [{"price_fine": [1]}]
+    },
+    {
+        "id": "ev_card_pst",
+        "title": "Priests (Monks)",
+        "description": "2 coins of donations for each seller.",
+        "fortune": "negative",
+        "quantity_ingame": 7,
+        "quantity_active": 7,
+        "position_in_game": "deck",
+        "goal_action": "sector",
+        "goal_item": "product",
+        "effect": [{"price_fine": [2]}]
+    },
+    {
+        "id": "ev_card_up",
+        "title": "Underworld Protection",
+        "description": "Protection.",
+        "fortune": "positive",
+        "quantity_ingame": 21,
+        "quantity_active": 18,
+        "position_in_game": "deck",
+        "goal_action": "trader",
+        "goal_item": "trader",
+        "effect": [{"Illigal_protection": "true"}, {"trader_action": "free"}]
+    },
+    {
+        "id": "ev_card_rc",
+        "title": "Regular Customer",
+        "description": "Profit +2 coins.",
+        "fortune": "positive",
+        "quantity_ingame": 14,
+        "quantity_active": 14,
+        "position_in_game": "deck",
+        "goal_action": "trader",
+        "goal_item": "product",
+        "effect": [{"extra_price": [2]}]
+    },
+    {
+        "id": "ev_card_tabp",
+        "title": "Transport Arrived and Brought People",
+        "description": "Profit +1 from each seller.",
+        "fortune": "positive",
+        "quantity_ingame": 14,
+        "quantity_active": 14,
+        "position_in_game": "deck",
+        "goal_action": "trader",
+        "goal_item": "product",
+        "effect": [{"extra_price": [1]}]
+    },
+    {
+        "id": "ev_card_prtrs",
+        "title": "Porters",
+        "description": "Goods +1 from the market for free.",
+        "fortune": "positive",
+        "quantity_ingame": 14,
+        "quantity_active": 14,
+        "position_in_game": "deck",
+        "goal_action": "trader",
+        "goal_item": "product",
+        "effect": [{"extra_product": [1]}]
+    }
+]
 
-            ]
-        }
-    ]
-}
 
-for sector in json_products["sectors"]:
-    sector_name = sector["sector"].capitalize()
-    sector_obj, created = Sector.objects.get_or_create(name=sector_name)
-    if created:
-        print("Sector {sector_name} created")
-        sector_obj.save()
-    else:
-        print("Sector {sector_name} already exists")
+# create EventCards from json_event_cards
 
-    # create all the products
-    for product in sector["products"]:
-        print("👉🏻product", product)
-        product_name = product["productName"].capitalize()
-        product_obj, created = sector_obj.products.get_or_create(
-            name=product_name, sector=sector_obj,
-            sell_price=product["sellingPrice"],
-            buy_price=product["wholesalePrice"],
-            is_legal=product.get("legality", "legal") == "legal",
-            image=product["imageSrc"],
 
-        )
-        if created:
-            product_obj.save()
-            print("Product {product_name} created")
-        else:
-            print("Product {product_name} already exists")
+def set_effects(event_card, target_item, effect, save=False):
+    if target_item == "trader":
+        if "confiscation" in effect:
+            event_card.confiscation = bool(effect.get("confiscation", 'false') == 'true')
+        if "fine" in effect:
+            event_card.trader_extra_profit = -effect.get("fine", [0])[0]
+        if "trader_action" in effect:
+            event_card.trader_is_active = bool(effect.get("trader_action", 'false') == "free")
+        if "Illigal_protection" in effect:
+            event_card.protection = bool(effect.get("Illigal_protection", 'false') == "true")
+    elif target_item == "product":
+        if "price_fine" in effect:
+            event_card.product_extra_profit = -effect.get("price_fine")[0]
+        if "extra_price" in effect:
+            event_card.player_extra_profit = effect.get("extra_price")[0]
+    if save:
+        event_card.save()
+
+
+for card in json_event_cards:
+    event_card, created = EventCard.objects.get_or_create(
+        name=card["title"].capitalize(),
+        description=card["description"],
+
+        fortune=card["fortune"],
+        target=card["goal_action"],
+        # item=card["goal_item"],
+    )
+
+    for effect in card["effect"]:
+        set_effects(event_card, card["goal_item"], effect, True)
+
+    print("👉🏻event_card", event_card.__dict__)
