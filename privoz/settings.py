@@ -144,9 +144,12 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.lavron.dev',
     'https://*.kotucheniy.com.ua',
     'http://localhost',
+    'http://0.0.0.0',
+    'https://0.0.0.0',
     'http://127.0.0.1'
 ]
 ALLOWED_HOSTS = [
+    '0.0.0.0',
     '127.0.0.1',
     'localhost',
     '.lavron.dev',

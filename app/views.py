@@ -11,7 +11,6 @@ def game_box(request, game_id):
 
     game_data = {
         'pk': game.pk,
-        # add other game fields here
     }
     players_data = [{
         'pk': player.pk,
@@ -20,12 +19,13 @@ def game_box(request, game_id):
         'color': player.color,
         'premium_sector': player.premium_sector.pk,
         'event_card_protection': player.event_card_protection.pk
-
     } for player in players]
+
     sectors_data = [{
         'pk': sector.pk,
         'name': sector.name,
         'description': sector.description} for sector in sectors]
+
     product_cards_data = [{
         'pk': card.pk,
         'name': card.name,
@@ -36,7 +36,6 @@ def game_box(request, game_id):
         'sector': card.sector.pk,
         'sell_price': card.sell_price,
         'buy_price': card.buy_price,
-
     } for card in product_cards]
 
     event_cards_data = [{
