@@ -42,7 +42,25 @@ class ProductCardDeckType(DjangoObjectType):
     class Meta:
         model = ProductCardDeck
 
+class ShuffleDeck(graphene.Mutation):
 
+    class Arguments:
+        id = graphene.ID()
+
+    deck = graphene.Field(EventCardDeckType)
+
+    def mutate(self, info, card_type, id):
+        if card_type == 'event':
+            deck = EventCardDeck.objects.get(pk=id)
+        elif card_type == 'product':
+            deck = ProductCardDeck.objects.get(pk=id)
+        deck.shuffle()
+        deck.save()
+        return ShuffleDeck(deck=deck)
+
+
+class Mutation(graphene.ObjectType):
+    shuffle_deck = ShuffleDeck.Field()
 
 class Query(graphene.ObjectType):
     games = graphene.List(GameType)
@@ -82,4 +100,4 @@ class Query(graphene.ObjectType):
         return ProductCardDeck.objects.all()
 
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=Mutation)
