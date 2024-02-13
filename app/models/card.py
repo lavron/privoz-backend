@@ -17,7 +17,6 @@ class Card(models.Model):
 
 
 class Deck(models.Model):
-    cards = models.ManyToManyField(Card)
     card_model = Card
 
     class Meta:

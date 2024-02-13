@@ -1,5 +1,5 @@
 from django.db import models
-from .card import Card
+from .card import Card, Deck
 from ..game_config import EVENT_IMAGE_PLACEHOLDER
 
 LOCATION_CHOICES = [
@@ -42,3 +42,12 @@ class EventCard(Card):
     # trader_is_active = models.BooleanField(default=True)
 
     image = models.CharField(max_length=100, blank=True, default=EVENT_IMAGE_PLACEHOLDER)
+
+
+class EventCardDeck(Deck):
+    def __init__(self):
+        super().__init__(card_model=EventCard)
+        self.save()
+
+    def __str__(self):
+        return 'Event Card Deck ' + str(self.pk)

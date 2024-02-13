@@ -1,6 +1,8 @@
 import graphene
 from graphene_django import DjangoObjectType
 from app.models import Game, Player, Sector, ProductCard, EventCard, Trader
+from app.models.event_card import EventCardDeck
+from app.models.product_card import ProductCardDeck
 
 
 class GameType(DjangoObjectType):
@@ -32,6 +34,15 @@ class TraderCardType(DjangoObjectType):
     class Meta:
         model = Trader
 
+class EventCardDeckType(DjangoObjectType):
+    class Meta:
+        model = EventCardDeck
+
+class ProductCardDeckType(DjangoObjectType):
+    class Meta:
+        model = ProductCardDeck
+
+
 
 class Query(graphene.ObjectType):
     games = graphene.List(GameType)
@@ -40,6 +51,8 @@ class Query(graphene.ObjectType):
     product_cards = graphene.List(ProductCardType)
     event_cards = graphene.List(EventCardType)
     traders = graphene.List(TraderCardType)
+    event_card_decks = graphene.List(EventCardDeckType)
+    product_card_decks = graphene.List(ProductCardDeckType)
 
     def resolve_game(self, info, pk, **kwargs):
         return Game.objects.get(pk=pk)
@@ -59,8 +72,14 @@ class Query(graphene.ObjectType):
     def resolve_event_cards(self, info, **kwargs):
         return EventCard.objects.all()
 
-    def resolve_traderss(self, info, **kwargs):
+    def resolve_traders(self, info, **kwargs):
         return Trader.objects.all()
+
+    def resolve_event_card_decks(self, info, **kwargs):
+        return EventCardDeck.objects.all()
+
+    def resolve_product_card_decks(self, info, **kwargs):
+        return ProductCardDeck.objects.all()
 
 
 schema = graphene.Schema(query=Query)
