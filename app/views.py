@@ -9,6 +9,7 @@ def game_box(request, game_id):
     product_cards = ProductCard.objects.filter(games=game)
     event_cards = EventCard.objects.filter(games=game)
 
+
     game_data = {
         'pk': game.pk,
         # add other game fields here
