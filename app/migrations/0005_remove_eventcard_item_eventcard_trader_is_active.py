@@ -14,9 +14,9 @@ class Migration(migrations.Migration):
         #     model_name='eventcard',
         #     name='item',
         # ),
-        migrations.AddField(
-            model_name='eventcard',
-            name='trader_is_active',
-            field=models.BooleanField(default=True),
-        ),
+        # migrations.AddField(
+        #     model_name='eventcard',
+        #     name='trader_is_active',
+        #     field=models.BooleanField(default=True),
+        # ),
     ]
