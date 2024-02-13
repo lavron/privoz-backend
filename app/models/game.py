@@ -1,4 +1,6 @@
 from django.db import models
+
+
 # from .player import Player
 
 
@@ -7,8 +9,7 @@ class Game(models.Model):
     sectors = models.ManyToManyField('Sector', related_name='games')
     product_cards = models.ManyToManyField('ProductCard', related_name='games')
     event_cards = models.ManyToManyField('EventCard', related_name='games')
+    trader_capacity = models.IntegerField(default=2)  # number of products per trader
 
     def __str__(self):
         return 'Game ' + str(self.pk)
-
-

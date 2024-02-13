@@ -38,6 +38,8 @@ class EventCard(Card):
     trader_extra_profit = models.IntegerField(blank=True, null=True)
     product_extra_profit = models.IntegerField(blank=True, null=True)
 
+    product_extra_item = models.IntegerField(blank=True, null=True)
+
     trader_is_active = models.BooleanField(default=True)
 
     image = models.CharField(max_length=100, blank=True, default=EVENT_IMAGE_PLACEHOLDER)

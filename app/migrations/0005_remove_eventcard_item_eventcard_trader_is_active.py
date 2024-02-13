@@ -10,10 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='eventcard',
-            name='item',
-        ),
+        # migrations.RemoveField(
+        #     model_name='eventcard',
+        #     name='item',
+        # ),
         migrations.AddField(
             model_name='eventcard',
             name='trader_is_active',
