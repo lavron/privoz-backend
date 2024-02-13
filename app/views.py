@@ -41,7 +41,7 @@ def game_box(request, game_id):
         'player_extra_profit': card.player_extra_profit,
         'trader_extra_profit': card.trader_extra_profit,
         'product_extra_profit': card.product_extra_profit,
-        'trader_is_active': card.trader_is_active,
+        # 'trader_is_active': card.trader_is_active,
 
     } for card in event_cards]
 
