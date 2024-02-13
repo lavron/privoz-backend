@@ -35,6 +35,9 @@ class Query(graphene.ObjectType):
     product_cards = graphene.List(ProductCardType)
     event_cards = graphene.List(EventCardType)
 
+    def resolve_game(self, info, pk, **kwargs):
+        return Game.objects.get(pk=pk)
+
     def resolve_games(self, info, **kwargs):
         return Game.objects.all()
 

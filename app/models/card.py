@@ -29,14 +29,16 @@ class Deck(models.Model):
     def __init__(self, *args, **kwargs):
         self.card_model = kwargs.pop('card_model', Card)
         super().__init__()
-        self.add_cards()
+        self.create()
+        self.shuffle()
 
-    def add_cards(self):
+    def create(self, *args, **kwargs):
         all_cards = Card.objects.all()
         deck_cards = []
         for card in all_cards:
             for _ in range(card.quantity):
                 deck_cards.append(card)
-        shuffle(deck_cards)
-        for card in deck_cards:
-            self.card_model.objects.create(deck=self, card=card)
+        self.cards = deck_cards
+
+    def shuffle(self):
+        shuffle(self.cards)
