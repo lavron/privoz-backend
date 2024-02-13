@@ -7,4 +7,4 @@ class Trader(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return 'Trader ' + str(self.pk) + ' of ' + self.player.name
+        return 'Trader ' + str(self.pk)
