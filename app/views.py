@@ -54,3 +54,5 @@ def game_box(request, game_id):
     }
 
     return JsonResponse(data, safe=False)
+
+

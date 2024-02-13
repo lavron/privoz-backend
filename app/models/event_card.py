@@ -28,7 +28,6 @@ class EventCard(Card):
     location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default="deck")
     fortune = models.CharField(max_length=20, choices=FORTUNE_CHOICES, blank=True)
     target = models.CharField(max_length=20, choices=TARGET_CHOICES, blank=True)
-    # item = models.CharField(max_length=20, choices=ITEM_CHOICES, blank=True)
 
     # effects
     confiscation = models.BooleanField(blank=True, default=False)
@@ -40,6 +39,6 @@ class EventCard(Card):
 
     product_extra_item = models.IntegerField(blank=True, null=True)
 
-    trader_is_active = models.BooleanField(default=True)
+    # trader_is_active = models.BooleanField(default=True)
 
     image = models.CharField(max_length=100, blank=True, default=EVENT_IMAGE_PLACEHOLDER)
