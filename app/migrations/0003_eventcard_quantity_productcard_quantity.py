@@ -10,14 +10,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='eventcard',
-            name='quantity',
-            field=models.IntegerField(db_default=models.Value(1), default=1),
-        ),
-        migrations.AddField(
-            model_name='productcard',
-            name='quantity',
-            field=models.IntegerField(db_default=models.Value(1), default=1),
-        ),
+        # migrations.AddField(
+        #     model_name='eventcard',
+        #     name='quantity',
+        #     field=models.IntegerField(db_default=models.Value(1), default=1),
+        # ),
+        # migrations.AddField(
+        #     model_name='productcard',
+        #     name='quantity',
+        #     field=models.IntegerField(db_default=models.Value(1), default=1),
+        # ),
     ]
