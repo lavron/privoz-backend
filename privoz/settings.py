@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'corsheaders.middleware.CorsMiddleware',
+    'privoz.utils.DisableCSRFCheck',
 ]
 
 ROOT_URLCONF = 'privoz.urls'
