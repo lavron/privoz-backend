@@ -45,9 +45,9 @@ class EventCard(Card):
 
 
 class EventCardDeck(Deck):
-    def __init__(self):
-        super().__init__(card_model=EventCard)
-        self.save()
+    def __init__(self, *args, **kwargs):
+        super().__init__(card_model=EventCard, *args, **kwargs)
+        # self.save()
 
     def __str__(self):
         return 'Event Card Deck ' + str(self.pk)

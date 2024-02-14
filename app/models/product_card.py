@@ -13,9 +13,8 @@ class ProductCard(Card):
 
 
 class ProductCardDeck(Deck):
-    def __init__(self):
-        super().__init__(card_model=ProductCard)
-        self.save()
+    def __init__(self, *args, **kwargs):
+        super().__init__(card_model=ProductCard, *args, **kwargs)
 
     def __str__(self):
         return 'Product Card Deck ' + str(self.pk)

@@ -18,6 +18,7 @@ class Card(models.Model):
 
 class Deck(models.Model):
     card_model = Card
+    cards = []
 
     class Meta:
         abstract = True
@@ -27,12 +28,13 @@ class Deck(models.Model):
 
     def __init__(self, *args, **kwargs):
         self.card_model = kwargs.pop('card_model', Card)
+        print("👉🏻self.card_model", self.card_model)
         super().__init__()
         self.create()
         self.shuffle()
 
     def create(self, *args, **kwargs):
-        all_cards = Card.objects.all()
+        all_cards = self.card_model.objects.all()
         deck_cards = []
         for card in all_cards:
             for _ in range(card.quantity):
