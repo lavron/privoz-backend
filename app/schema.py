@@ -29,31 +29,66 @@ class EventCardType(DjangoObjectType):
     class Meta:
         model = EventCard
 
+
 class ProductCardDeckType(DjangoObjectType):
     class Meta:
         model = ProductCardDeck
 
+
 class EventCardDeckType(DjangoObjectType):
     class Meta:
         model = EventCardDeck
+
 
 class TraderCardType(DjangoObjectType):
     class Meta:
         model = Trader
 
 
-class ShuffleDeck(graphene.Mutation):
+class AddTrader(graphene.Mutation):
+    class Arguments:
+        game_id = graphene.ID()
+        user_id = graphene.ID()
+        sector_id = graphene.ID()
+        products_ids = graphene.List(graphene.ID)
 
+    trader = graphene.Field(TraderCardType)
+
+    def mutate(self, info, game_id, user_id, sector_id, products_ids):
+        sector = Sector.objects.get(pk=sector_id)
+        trader = Trader.objects.create(sector=sector)
+        trader.products.set(ProductCard.objects.filter(pk__in=products_ids))
+        trader.save()
+        game = Game.objects.get(pk=game_id)
+        player = game.players.get(pk=user_id)
+        player.traders.add(trader)
+        player.save()
+
+        return AddTrader(trader=trader)
+
+
+class DeckUnion(graphene.Union):
+    class Meta:
+        types = (EventCardDeckType, ProductCardDeckType)
+
+
+class ShuffleDeck(graphene.Mutation):
     class Arguments:
         id = graphene.ID()
+        deck_type = graphene.String()
 
-    deck = graphene.Field(EventCardDeckType)
+    deck = graphene.Field(DeckUnion)
 
-    def mutate(self, info, card_type, id):
-        if card_type == 'event':
-            deck = EventCardDeck.objects.get(pk=id)
-        elif card_type == 'product':
-            deck = ProductCardDeck.objects.get(pk=id)
+    def mutate(self, info, id, deck_type):
+        deck_class_map = {
+            'EventCardDeck': EventCardDeck,
+            'ProductCardDeck': ProductCardDeck
+        }
+
+        if deck_type not in deck_class_map:
+            raise Exception('Invalid deck type!')
+
+        deck = deck_class_map[deck_type].objects.get(pk=id)
         deck.shuffle()
         deck.save()
         return ShuffleDeck(deck=deck)
@@ -61,6 +96,8 @@ class ShuffleDeck(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     shuffle_deck = ShuffleDeck.Field()
+    add_trader = AddTrader.Field()
+
 
 class Query(graphene.ObjectType):
     games = graphene.List(GameType)

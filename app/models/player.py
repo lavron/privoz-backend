@@ -8,7 +8,7 @@ class Player(models.Model):
     premium_sector = models.ForeignKey('Sector', related_name='premium_sector', on_delete=models.CASCADE, null=True)
     event_card_protection = models.ForeignKey('EventCard', related_name='event_card_protection',
                                               on_delete=models.CASCADE, null=True)
-    traders = models.ForeignKey('Trader', related_name='player', on_delete=models.CASCADE, blank=True, default=None)
+    # traders = models.ForeignKey('Trader', related_name='player', on_delete=models.CASCADE, blank=True, default=None)
 
     # event_cards_new = models.ManyToManyField('EventCard', through='PlayerEventCard', related_name='players', blank=True)
     # product_cards_new = models.ManyToManyField('ProductCard', through='PlayerProductCard', related_name='players', default=None, blank=True)
