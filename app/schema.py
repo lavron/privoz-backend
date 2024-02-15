@@ -29,18 +29,18 @@ class EventCardType(DjangoObjectType):
     class Meta:
         model = EventCard
 
-
-class TraderCardType(DjangoObjectType):
+class ProductCardDeckType(DjangoObjectType):
     class Meta:
-        model = Trader
+        model = ProductCardDeck
 
 class EventCardDeckType(DjangoObjectType):
     class Meta:
         model = EventCardDeck
 
-class ProductCardDeckType(DjangoObjectType):
+class TraderCardType(DjangoObjectType):
     class Meta:
-        model = ProductCardDeck
+        model = Trader
+
 
 class ShuffleDeck(graphene.Mutation):
 
