@@ -13,6 +13,9 @@ class Player(models.Model):
     is_ready = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.hero.name
+
 
 class PlayerEventCard(models.Model):
     player = models.ForeignKey('Player', on_delete=models.CASCADE)

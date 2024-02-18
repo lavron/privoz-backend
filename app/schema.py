@@ -11,9 +11,9 @@ class GameType(DjangoObjectType):
         model = Game
 
 
-class PlayerType(DjangoObjectType):
-    class Meta:
-        model = Player
+# class PlayerType(DjangoObjectType):
+#     class Meta:
+#         model = Player
 
 
 class HeroType(DjangoObjectType):
@@ -35,20 +35,26 @@ class EventCardType(DjangoObjectType):
     class Meta:
         model = EventCard
 
-
-class ProductCardDeckType(DjangoObjectType):
-    class Meta:
-        model = ProductCardDeck
-
-
-class EventCardDeckType(DjangoObjectType):
-    class Meta:
-        model = EventCardDeck
-
+#
+# class ProductCardDeckType(DjangoObjectType):
+#     class Meta:
+#         model = ProductCardDeck
+#
+#
+# class EventCardDeckType(DjangoObjectType):
+#     class Meta:
+#         model = EventCardDeck
+#
 
 class TraderCardType(DjangoObjectType):
     class Meta:
         model = Trader
+
+class BoxType(graphene.ObjectType):
+    heroes = graphene.List(HeroType)
+    sectors = graphene.List(SectorType)
+    product_cards = graphene.List(ProductCardType)
+    event_cards = graphene.List(EventCardType)
 
 
 class AddTrader(graphene.Mutation):
@@ -73,35 +79,35 @@ class AddTrader(graphene.Mutation):
         return AddTrader(trader=trader)
 
 
-class DeckUnion(graphene.Union):
-    class Meta:
-        types = (EventCardDeckType, ProductCardDeckType)
+# class DeckUnion(graphene.Union):
+#     class Meta:
+#         types = (EventCardDeckType, ProductCardDeckType)
 
 class LibraryUnion(graphene.Union):
     class Meta:
         types = (EventCardType, ProductCardType, HeroType, SectorType)
 
-class ShuffleDeck(graphene.Mutation):
-    class Arguments:
-        id = graphene.ID()
-        deck_type = graphene.String()
-
-    deck = graphene.Field(DeckUnion)
-
-    def mutate(self, info, id, deck_type):
-        deck_class_map = {
-            'EventCardDeck': EventCardDeck,
-            'ProductCardDeck': ProductCardDeck
-        }
-
-        if deck_type not in deck_class_map:
-            raise Exception('Invalid deck type!')
-
-        deck = deck_class_map[deck_type].objects.get(pk=id)
-        deck.shuffle()
-        deck.save()
-        return ShuffleDeck(deck=deck)
-
+# class ShuffleDeck(graphene.Mutation):
+#     class Arguments:
+#         id = graphene.ID()
+#         deck_type = graphene.String()
+#
+#     deck = graphene.Field(DeckUnion)
+#
+#     def mutate(self, info, id, deck_type):
+#         deck_class_map = {
+#             'EventCardDeck': EventCardDeck,
+#             'ProductCardDeck': ProductCardDeck
+#         }
+#
+#         if deck_type not in deck_class_map:
+#             raise Exception('Invalid deck type!')
+#
+#         deck = deck_class_map[deck_type].objects.get(pk=id)
+#         deck.shuffle()
+#         deck.save()
+#         return ShuffleDeck(deck=deck)
+#
 
 class TakeProductCard(graphene.Mutation):
     class Arguments:
@@ -136,26 +142,27 @@ class TakeEventCard(graphene.Mutation):
 
 
 class Mutation(graphene.ObjectType):
-    shuffle_deck = ShuffleDeck.Field()
+    # shuffle_deck = ShuffleDeck.Field()
     add_trader = AddTrader.Field()
 
 
 class Query(graphene.ObjectType):
     games = graphene.List(GameType)
-    heroes = graphene.List(HeroType)
-    players = graphene.List(PlayerType)
-    sectors = graphene.List(SectorType)
-    product_cards = graphene.List(ProductCardType)
-    event_cards = graphene.List(EventCardType)
-    traders = graphene.List(TraderCardType)
-    event_card_decks = graphene.List(EventCardDeckType)
-    product_card_decks = graphene.List(ProductCardDeckType)
+    # heroes = graphene.List(HeroType)
+    # players = graphene.List(PlayerType)
+    # sectors = graphene.List(SectorType)
+    # product_cards = graphene.List(ProductCardType)
+    # event_cards = graphene.List(EventCardType)
+    # traders = graphene.List(TraderCardType)
+    # event_card_decks = graphene.List(EventCardDeckType)
+    # product_card_decks = graphene.List(ProductCardDeckType)
 
-    library = graphene.List(LibraryUnion)
+    # library = graphene.List(LibraryUnion)
+    box = graphene.Field(BoxType)
 
     game = graphene.Field(GameType, pk=graphene.ID())
-    player = graphene.Field(PlayerType, pk=graphene.ID())
-    sector = graphene.Field(SectorType, pk=graphene.ID())
+    # player = graphene.Field(PlayerType, pk=graphene.ID())
+    # sector = graphene.Field(SectorType, pk=graphene.ID())
 
     def resolve_game(self, info, pk, **kwargs):
         return Game.objects.get(pk=pk)
@@ -163,36 +170,43 @@ class Query(graphene.ObjectType):
     def resolve_games(self, info, **kwargs):
         return Game.objects.all()
 
-    def resolve_players(self, info, **kwargs):
-        return Player.objects.all()
+    # def resolve_players(self, info, **kwargs):
+    #     return Player.objects.all()
+    #
+    # def resolve_player(self, info, game_id, player_id, **kwargs):
+    #     game = Game.objects.get(pk=game_id)
+    #     return game.players.get(pk=player_id)
 
-    def resolve_player(self, info, game_id, player_id, **kwargs):
-        game = Game.objects.get(pk=game_id)
-        return game.players.get(pk=player_id)
+    # def resolve_heroes(self, info, **kwargs):
+    #     return Player.objects.all()
+    #
+    # def resolve_sectors(self, info, **kwargs):
+    #     return Sector.objects.all()
+    #
+    # def resolve_library(self, info, **kwargs):
+    #     return Hero.objects.all() | Sector.objects.all() | EventCard.objects.all() | ProductCard.objects.all()
 
-    def resolve_heroes(self, info, **kwargs):
-        return Player.objects.all()
+    def resolve_box(self, info, **kwargs):
+        return BoxType(
+            heroes=Hero.objects.all(),
+            sectors=Sector.objects.all(),
+            product_cards=ProductCard.objects.all(),
+            event_cards=EventCard.objects.all()
+        )
+    # def resolve_product_cards(self, info, **kwargs):
+    #     return ProductCard.objects.all()
+    #
+    # def resolve_event_cards(self, info, **kwargs):
+    #     return EventCard.objects.all()
 
-    def resolve_sectors(self, info, **kwargs):
-        return Sector.objects.all()
-
-    def resolve_library(self, info, **kwargs):
-        return Hero.objects.all() | Sector.objects.all() | EventCard.objects.all() | ProductCard.objects.all()
-
-    def resolve_product_cards(self, info, **kwargs):
-        return ProductCard.objects.all()
-
-    def resolve_event_cards(self, info, **kwargs):
-        return EventCard.objects.all()
-
-    def resolve_traders(self, info, **kwargs):
-        return Trader.objects.all()
-
-    def resolve_event_card_decks(self, info, **kwargs):
-        return EventCardDeck.objects.all()
-
-    def resolve_product_card_decks(self, info, **kwargs):
-        return ProductCardDeck.objects.all()
+    # def resolve_traders(self, info, **kwargs):
+    #     return Trader.objects.all()
+    #
+    # def resolve_event_card_decks(self, info, **kwargs):
+    #     return EventCardDeck.objects.all()
+    #
+    # def resolve_product_card_decks(self, info, **kwargs):
+    #     return ProductCardDeck.objects.all()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
