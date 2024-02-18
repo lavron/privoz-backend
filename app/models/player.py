@@ -12,9 +12,9 @@ class Player(models.Model):
 
     is_ready = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'{self.hero.name} in game {self.game.pk}'
+    #
+    # def __str__(self):
+    #     return f'{self.hero.name} in game {self.game.pk}'
 
 
 class PlayerEventCard(models.Model):
