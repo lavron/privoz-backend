@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='player',
             name='game',
-            field=models.ForeignKey(db_default=models.Value(14), null=True, on_delete=django.db.models.deletion.CASCADE, related_name='player_in_games', to='app.game'),
+            field=models.ForeignKey(db_default=models.Value(3), null=True, on_delete=django.db.models.deletion.CASCADE, related_name='player_in_games', to='app.game'),
         ),
         migrations.AddField(
             model_name='player',

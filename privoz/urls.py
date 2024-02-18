@@ -5,6 +5,10 @@ from app.views import game_box
 from graphene_django.views import GraphQLView
 from app.schema import schema
 
+admin.site.site_header = "Privoz the Game"
+admin.site.site_title = "Admin Portal"
+admin.site.index_title = "Welcome to Privoz the Game Portal"
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
