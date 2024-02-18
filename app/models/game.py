@@ -1,12 +1,13 @@
 from django.db import models
 
-from app.models import Sector
+from app.models import Sector, Hero
 from app.models.event_card import EventCardDeck
 from app.models.player import Player
 from app.models.product_card import ProductCardDeck
 
 
 class Game(models.Model):
+    players_count = models.IntegerField(default=0)
     players = models.ManyToManyField('Hero', related_name='games', through=Player)
     product_cards_deck = models.ForeignKey(ProductCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
     event_cards_deck = models.ForeignKey(EventCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
@@ -30,4 +31,10 @@ class Game(models.Model):
         self.product_cards_deck = ProductCardDeck.create_and_initialize()
         self.event_cards_deck = EventCardDeck.create_and_initialize()
         self.sectors.set(Sector.objects.all())
+        # get first 'players_count' heroes and create players
+        heroes = Hero.objects.all()[:self.players_count]
+        for hero in heroes:
+            player = Player(hero=hero, game=self)
+            player.save()
+
         self.save()
