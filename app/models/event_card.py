@@ -2,12 +2,7 @@ from django.db import models
 from .card import Card, Deck, CardInDeck
 from ..game_config import EVENT_IMAGE_PLACEHOLDER
 
-LOCATION_CHOICES = [
-    ("deck", "Deck"),
-    ("hand", "Hand"),
-    ("played", "Played"),
-    ("discard", "Discard"),
-]
+
 FORTUNE_CHOICES = [
     ("positive", "Positive"),
     ("negative", "Negative"),
@@ -25,7 +20,6 @@ ITEM_CHOICES = [
 
 
 class EventCard(Card):
-    location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default="deck")
     fortune = models.CharField(max_length=20, choices=FORTUNE_CHOICES, blank=True)
     target = models.CharField(max_length=20, choices=TARGET_CHOICES, blank=True)
 

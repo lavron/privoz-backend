@@ -1,12 +1,20 @@
 from random import shuffle
 from django.db import models, transaction
 
+LOCATION_CHOICES = [
+    ("deck", "Deck"),
+    ("hand", "Hand"),
+    ("table", "Table"),
+    ("discard", "Discard"),
+]
+
 
 class Card(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     image = models.CharField(max_length=100, blank=True)
     quantity = models.IntegerField(default=1, db_default=1)
+    location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default="deck")
 
     def __str__(self):
         return self.name
@@ -26,7 +34,6 @@ class Deck(models.Model):
         self.card_model = kwargs.pop('card_model', None)
         self.card_in_deck_model = kwargs.pop('card_in_deck_model', None)
         super().__init__(*args, **kwargs)
-
 
     @classmethod
     @transaction.atomic
@@ -61,6 +68,13 @@ class Deck(models.Model):
             instance.order = order
             instance.save()
         print("👉🏻shuffle card_in_deck_instances", card_in_deck_instances)
+
+    def take_card(self):
+        first_card = self.card_in_deck_model.objects.pop()
+        first_card.location = "hand"
+        first_card.save()
+
+        return first_card
 
 
 class CardInDeck(models.Model):
