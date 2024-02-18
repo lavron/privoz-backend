@@ -10,12 +10,6 @@ class GameType(DjangoObjectType):
     class Meta:
         model = Game
 
-
-# class PlayerType(DjangoObjectType):
-#     class Meta:
-#         model = Player
-
-
 class HeroType(DjangoObjectType):
     class Meta:
         model = Hero
@@ -35,16 +29,6 @@ class EventCardType(DjangoObjectType):
     class Meta:
         model = EventCard
 
-#
-# class ProductCardDeckType(DjangoObjectType):
-#     class Meta:
-#         model = ProductCardDeck
-#
-#
-# class EventCardDeckType(DjangoObjectType):
-#     class Meta:
-#         model = EventCardDeck
-#
 
 class TraderCardType(DjangoObjectType):
     class Meta:
@@ -147,25 +131,12 @@ class Mutation(graphene.ObjectType):
 
 
 class Query(graphene.ObjectType):
-    games = graphene.List(GameType)
-    # heroes = graphene.List(HeroType)
-    # players = graphene.List(PlayerType)
-    # sectors = graphene.List(SectorType)
-    # product_cards = graphene.List(ProductCardType)
-    # event_cards = graphene.List(EventCardType)
-    # traders = graphene.List(TraderCardType)
-    # event_card_decks = graphene.List(EventCardDeckType)
-    # product_card_decks = graphene.List(ProductCardDeckType)
-
-    # library = graphene.List(LibraryUnion)
     box = graphene.Field(BoxType)
-
+    games = graphene.List(GameType)
     game = graphene.Field(GameType, pk=graphene.ID())
-    # player = graphene.Field(PlayerType, pk=graphene.ID())
-    # sector = graphene.Field(SectorType, pk=graphene.ID())
 
-    def resolve_game(self, info, pk, **kwargs):
-        return Game.objects.get(pk=pk)
+    def resolve_game(self, info, pk=None, **kwargs):
+        return Game.objects.get(pk=pk) if pk else Game.objects.last()
 
     def resolve_games(self, info, **kwargs):
         return Game.objects.all()
