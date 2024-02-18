@@ -4,10 +4,8 @@ from .hero import Hero
 
 
 class Player(models.Model):
-    # hero = models.ForeignKey(Hero, related_name='player_in_games', on_delete=models.CASCADE, db_default=1, null=True)
-    game = models.ForeignKey('Game', related_name='player_in_games', on_delete=models.CASCADE, null=True, db_default=14)
-
-    # player = models.ForeignKey('self', on_delete=models.CASCADE, null=True, related_name='related_players')
+    hero = models.ForeignKey(Hero, related_name='player_in_games', on_delete=models.CASCADE, null=True)
+    game = models.ForeignKey('Game', related_name='player_in_games', on_delete=models.CASCADE, null=True)
 
     trader = models.ForeignKey('Trader', related_name='player_in_games', on_delete=models.CASCADE, null=True)
     coins = models.IntegerField(default=0)

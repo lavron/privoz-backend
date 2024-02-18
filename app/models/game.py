@@ -2,12 +2,14 @@ from django.db import models
 
 from app.models import Sector
 from app.models.event_card import EventCardDeck
-# from app.models.player import Player
+from app.models.player import Player
 from app.models.product_card import ProductCardDeck
+
+# lis all Game objects in database
 
 
 class Game(models.Model):
-    # players = models.ManyToManyField('Hero', related_name='games', through=Player)
+    players = models.ManyToManyField('Hero', related_name='games', through=Player)
     # players = models.ManyToManyField('Hero', related_name='games')
     product_cards_deck = models.ForeignKey(ProductCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
     event_cards_deck = models.ForeignKey(EventCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
