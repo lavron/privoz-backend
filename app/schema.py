@@ -16,7 +16,6 @@ class PlayerType(DjangoObjectType):
         model = Player
 
 
-
 class HeroType(DjangoObjectType):
     class Meta:
         model = Hero
@@ -132,6 +131,7 @@ class TakeEventCard(graphene.Mutation):
         player.save()
         return TakeEventCard(event_card=event_card)
 
+
 class Mutation(graphene.ObjectType):
     shuffle_deck = ShuffleDeck.Field()
     add_trader = AddTrader.Field()
@@ -148,6 +148,10 @@ class Query(graphene.ObjectType):
     event_card_decks = graphene.List(EventCardDeckType)
     product_card_decks = graphene.List(ProductCardDeckType)
 
+    game = graphene.Field(GameType, pk=graphene.ID())
+    player = graphene.Field(PlayerType, pk=graphene.ID())
+    sector = graphene.Field(SectorType, pk=graphene.ID())
+
     def resolve_game(self, info, pk, **kwargs):
         return Game.objects.get(pk=pk)
 
@@ -157,14 +161,17 @@ class Query(graphene.ObjectType):
     def resolve_players(self, info, **kwargs):
         return Player.objects.all()
 
-    def resolve_player(self, info, pk, **kwargs):
-        return Player.objects.get(pk=pk)
+    def resolve_player(self, info, game_id, player_id, **kwargs):
+        game = Game.objects.get(pk=game_id)
+        return game.players.get(pk=player_id)
 
     def resolve_heroes(self, info, **kwargs):
         return Player.objects.all()
 
     def resolve_sectors(self, info, **kwargs):
         return Sector.objects.all()
+
+
 
     def resolve_product_cards(self, info, **kwargs):
         return ProductCard.objects.all()

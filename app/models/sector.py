@@ -7,3 +7,8 @@ class Sector(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class GameSector(models.Model):
+    sector = models.ForeignKey(Sector, related_name='game_sector_instances', on_delete=models.CASCADE)
+    game = models.ForeignKey('Game', related_name='game_sector_instances', on_delete=models.CASCADE)

@@ -12,6 +12,7 @@ class Game(models.Model):
     product_cards_deck = models.ForeignKey(ProductCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
     event_cards_deck = models.ForeignKey(EventCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
     sectors = models.ManyToManyField(Sector, related_name='games')
+    game_sectors = models.ManyToManyField(Sector, related_name='sector_games', through='GameSector')
 
     turn = models.IntegerField(default=0)
     current_player = models.ForeignKey('Player', related_name='current_games', on_delete=models.CASCADE, null=True)
@@ -38,3 +39,7 @@ class Game(models.Model):
             player.save()
 
         self.save()
+
+
+# https://github.com/tsaglam/Carcassonne/tree/master/src/main/java/carcassonne/model
+#  https://github.com/seansegal/tincisnotcatan/blob/master/src/main/java/edu/brown/cs/actions/BuyDevelopmentCard.java#L18
