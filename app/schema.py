@@ -77,6 +77,9 @@ class DeckUnion(graphene.Union):
     class Meta:
         types = (EventCardDeckType, ProductCardDeckType)
 
+class LibraryUnion(graphene.Union):
+    class Meta:
+        types = (EventCardType, ProductCardType, HeroType, SectorType)
 
 class ShuffleDeck(graphene.Mutation):
     class Arguments:
@@ -148,6 +151,8 @@ class Query(graphene.ObjectType):
     event_card_decks = graphene.List(EventCardDeckType)
     product_card_decks = graphene.List(ProductCardDeckType)
 
+    library = graphene.List(LibraryUnion)
+
     game = graphene.Field(GameType, pk=graphene.ID())
     player = graphene.Field(PlayerType, pk=graphene.ID())
     sector = graphene.Field(SectorType, pk=graphene.ID())
@@ -171,7 +176,8 @@ class Query(graphene.ObjectType):
     def resolve_sectors(self, info, **kwargs):
         return Sector.objects.all()
 
-
+    def resolve_library(self, info, **kwargs):
+        return Hero.objects.all() | Sector.objects.all() | EventCard.objects.all() | ProductCard.objects.all()
 
     def resolve_product_cards(self, info, **kwargs):
         return ProductCard.objects.all()
