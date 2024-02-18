@@ -13,7 +13,7 @@ class Game(models.Model):
     product_cards_deck = models.ForeignKey(ProductCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
     event_cards_deck = models.ForeignKey(EventCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
 
-    game_sectors = models.ManyToManyField(Sector, related_name='games', through='GameSector')
+    sectors = models.ManyToManyField(Sector, related_name='games', through='GameSector')
 
     turn = models.IntegerField(default=0)
     current_player = models.ForeignKey('Player', related_name='current_games', on_delete=models.CASCADE, null=True)

@@ -7,5 +7,5 @@ class Box(models.Model):
     product_cards = models.ManyToManyField('ProductCard', related_name='box_product_cards')
     event_cards = models.ManyToManyField('EventCard', related_name='box_event_cards')
 
-    def Meta(self):
+    class Meta:
         abstract = True
