@@ -4,6 +4,7 @@ from app.models import Game
 def last_game_id():
     return Game.objects.order_by('-id').values_list('id', flat=True).first()
 
+
 class GameService:
 
     def get_game(self, game_id=None):
@@ -12,7 +13,6 @@ class GameService:
             return Game.objects.get(id=game_id)
         except Game.DoesNotExist:
             return None
-
 
     @staticmethod
     def get_all_games():

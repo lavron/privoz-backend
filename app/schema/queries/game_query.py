@@ -1,7 +1,7 @@
 import graphene
 
-from app.graphene_schema.types.game_type import GameType
-from app.graphene_schema.services.game_service import GameService
+from app.schema.types.game_type import GameType
+from app.schema.services.game_service import GameService
 
 game_service = GameService()
 

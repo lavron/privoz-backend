@@ -1,7 +1,7 @@
 import graphene
 
-from app.graphene_schema.types.box_type import BoxType
-from app.graphene_schema.services.box_service import BoxService
+from app.schema.types.box_type import BoxType
+from app.schema.services.box_service import BoxService
 
 box_service = BoxService()
 

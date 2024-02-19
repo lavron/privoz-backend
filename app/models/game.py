@@ -1,7 +1,9 @@
 import random
 
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
+from app.game_config import INITIAL_COINS, PHASE_CHOICES, PHASE_ORDER
 from app.models import Sector, Hero
 from app.models.event_card import EventCardDeck
 from app.models.player import Player
@@ -17,6 +19,18 @@ class Game(models.Model):
 
     sectors = models.ManyToManyField(Sector, related_name='games', through='GameSector')
 
+    turn_order = ArrayField(
+        models.IntegerField(),
+        default=list,
+    )
+    current_phase = models.CharField(
+        max_length=30,
+        choices=PHASE_CHOICES,
+        default='hire_trader',
+    )
+    current_turn_index = models.IntegerField(default=0)
+
+
     def save(self, *args, **kwargs):
         is_new = self.pk is None
         super().save(*args, **kwargs)
@@ -28,6 +42,7 @@ class Game(models.Model):
         self.initialize_card_decks()
         self.assign_all_sectors()
         self.create_players()
+        self.create_turn_order()
         self.save()
 
     def set_trader_capacity(self):
@@ -46,7 +61,30 @@ class Game(models.Model):
         heroes = heroes[:self.players_count]
         for hero in heroes:
             player = Player(hero=hero, game=self)
+            player.coins = INITIAL_COINS
             player.save()
+
+    def create_turn_order(self):
+        self.turn_order = list(range(self.players_count))
+        random.shuffle(self.turn_order)
+
+
+    def end_turn(self):
+        # If current player is the last in turn order, move to next phase and reset turn_index
+        if self.current_turn_index == len(self.turn_order) - 1:
+            self.move_to_next_phase()
+            self.reset_current_turn_index()
+        else:
+            self.current_turn_index += 1
+
+        self.save()
+
+    def move_to_next_phase(self):
+        self.current_phase = PHASE_ORDER[self.current_phase]
+
+    def reset_current_turn_index(self):
+        self.current_turn_index = 0
+
 
     def __str__(self):
         return 'Game ' + str(self.pk)

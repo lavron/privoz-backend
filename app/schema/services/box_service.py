@@ -1,4 +1,4 @@
-from app.graphene_schema.types.box_type import BoxType
+from app.schema.types.box_type import BoxType
 from app.models import Hero, Sector, ProductCard, EventCard
 
 

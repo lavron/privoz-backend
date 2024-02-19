@@ -3,7 +3,7 @@ from django.urls import path
 
 # from app.views import game_box
 from graphene_django.views import GraphQLView
-from app.schema import schema
+from app.graphene_schema import schema
 
 admin.site.site_header = "Privoz the Game"
 admin.site.site_title = "Admin Portal"

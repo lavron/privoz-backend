@@ -1,12 +1,12 @@
 import graphene
-from app.graphene_schema.mutations.add_trader import AddTrader
-from app.graphene_schema.types.box_type import BoxType
-from app.graphene_schema.types.game_type import GameType
-from app.graphene_schema.services.game_service import GameService
-from app.graphene_schema.services.box_service import BoxService
+from app.schema.mutations.hire_trader import HireTrader
+from app.schema.types.box_type import BoxType
+from app.schema.types.game_type import GameType
+from app.schema.services.game_service import GameService
+from app.schema.services.box_service import BoxService
 
 class Mutation(graphene.ObjectType):
-    add_trader = AddTrader.Field()
+    hire_trader = HireTrader.Field()
 
 class Query(graphene.ObjectType):
     box = graphene.Field(BoxType)

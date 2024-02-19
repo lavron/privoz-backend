@@ -1,10 +1,9 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from app.graphene_schema.types.box_type import ProductCardType, EventCardType
-from app.graphene_schema.types.player_type import PlayerType
+from app.schema.types.box_type import ProductCardType, EventCardType
+from app.schema.types.player_type import PlayerType
 from app.models import Game
-
 
 
 class GameType(DjangoObjectType):
@@ -14,7 +13,11 @@ class GameType(DjangoObjectType):
 
     class Meta:
         model = Game
-        fields = ('id', 'players', 'sectors', 'product_cards_deck', 'event_cards_deck')
+        fields = (
+        'id', 'players', 'sectors',
+        'product_cards_deck', 'event_cards_deck',
+        'turn_order', 'current_turn_index',
+        'current_phase')
 
     def resolve_product_cards_deck(self, info):
         return self.product_cards_deck.cards.all()
