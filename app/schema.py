@@ -140,23 +140,6 @@ class Query(graphene.ObjectType):
 
     def resolve_games(self, info, **kwargs):
         return Game.objects.all()
-
-    # def resolve_players(self, info, **kwargs):
-    #     return Player.objects.all()
-    #
-    # def resolve_player(self, info, game_id, player_id, **kwargs):
-    #     game = Game.objects.get(pk=game_id)
-    #     return game.players.get(pk=player_id)
-
-    # def resolve_heroes(self, info, **kwargs):
-    #     return Player.objects.all()
-    #
-    # def resolve_sectors(self, info, **kwargs):
-    #     return Sector.objects.all()
-    #
-    # def resolve_library(self, info, **kwargs):
-    #     return Hero.objects.all() | Sector.objects.all() | EventCard.objects.all() | ProductCard.objects.all()
-
     def resolve_box(self, info, **kwargs):
         return BoxType(
             heroes=Hero.objects.all(),
@@ -164,20 +147,7 @@ class Query(graphene.ObjectType):
             product_cards=ProductCard.objects.all(),
             event_cards=EventCard.objects.all()
         )
-    # def resolve_product_cards(self, info, **kwargs):
-    #     return ProductCard.objects.all()
-    #
-    # def resolve_event_cards(self, info, **kwargs):
-    #     return EventCard.objects.all()
 
-    # def resolve_traders(self, info, **kwargs):
-    #     return Trader.objects.all()
-    #
-    # def resolve_event_card_decks(self, info, **kwargs):
-    #     return EventCardDeck.objects.all()
-    #
-    # def resolve_product_card_decks(self, info, **kwargs):
-    #     return ProductCardDeck.objects.all()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
