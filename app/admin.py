@@ -9,7 +9,11 @@ admin.site.register(Hero)
 admin.site.register(EventCard, exclude=('location',))
 admin.site.register(ProductCard)
 admin.site.register(Sector)
-admin.site.register(Game, exclude=('turn','current_player'))
 admin.site.register(Trader)
 admin.site.register(EventCardDeck)
 admin.site.register(ProductCardDeck)
+
+
+# class GameAdmin(admin.ModelAdmin):
+#     fields = ['players_count',]
+admin.site.register(Game, fields = ['players_count',])

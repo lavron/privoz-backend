@@ -1,12 +1,12 @@
 from random import shuffle
 from django.db import models, transaction
 
-LOCATION_CHOICES = [
-    ("deck", "Deck"),
-    ("hand", "Hand"),
-    ("table", "Table"),
-    ("discard", "Discard"),
-]
+# LOCATION_CHOICES = [
+#     ("deck", "Deck"),
+#     ("hand", "Hand"),
+#     ("table", "Table"),
+#     ("discard", "Discard"),
+# ]
 
 
 class Card(models.Model):
@@ -14,7 +14,7 @@ class Card(models.Model):
     description = models.TextField(blank=True)
     image = models.CharField(max_length=100, blank=True)
     quantity = models.IntegerField(default=1, db_default=1)
-    location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default="deck")
+    # location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default="deck")
 
     def __str__(self):
         return self.name
@@ -38,22 +38,18 @@ class Deck(models.Model):
     @classmethod
     @transaction.atomic
     def create_and_initialize(cls):
+        # @todo: fix double creating of deck
         deck = cls()
         deck.save()
         deck.initialize()
         return deck
 
     def initialize(self):
-        if self.card_model and self.card_in_deck_model:
-            self.create()
-            self.shuffle()
-            self.save()
-        else:
-            raise ValueError("card_model and card_in_deck_model must be set")
+        self.create()
+        self.shuffle()
 
     def create(self):
         all_cards = self.card_model.objects.all()
-        print("👉🏻create all_cards", all_cards)
         card_in_deck_instances = []
         for index, card in enumerate(all_cards):
             for _ in range(card.quantity):
@@ -67,12 +63,12 @@ class Deck(models.Model):
         for order, instance in enumerate(card_in_deck_instances):
             instance.order = order
             instance.save()
-        print("👉🏻shuffle card_in_deck_instances", card_in_deck_instances)
+    #     @todo: check if deck is created and saved at this point
 
-    def take_card(self):
+    def draw_card(self):
         first_card = self.card_in_deck_model.objects.pop()
-        first_card.location = "hand"
-        first_card.save()
+        if not self.card_in_deck_model.objects.all():
+            self.initialize()
 
         return first_card
 
