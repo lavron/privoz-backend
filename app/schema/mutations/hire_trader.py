@@ -9,12 +9,11 @@ class HireTrader(graphene.Mutation):
     class Arguments:
         player_id = graphene.Int(required=True)
         sector_id = graphene.Int(required=True)
-        products_ids = graphene.List(graphene.Int, required=True)
 
     trader = graphene.Field(lambda: TraderType)
 
     @staticmethod
-    def mutate(root, info, player_id, sector_id, products_ids):
+    def mutate(root, info, player_id, sector_id):
         player = Player.objects.get(id=player_id)
 
         game = player.game
@@ -22,6 +21,6 @@ class HireTrader(graphene.Mutation):
         if player.id != current_player_id:
             raise Exception('It is not this player\'s turn')
 
-        trader = TraderService.hire(player_id, sector_id, products_ids)
+        trader = TraderService.hire(player_id, sector_id)
         player.game.end_turn()
         return HireTrader(trader=trader)
