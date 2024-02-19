@@ -16,10 +16,10 @@ class HireTrader(graphene.Mutation):
     def mutate(root, info, player_id, sector_id):
         player = Player.objects.get(id=player_id)
 
-        game = player.game
-        current_player_id = game.turn_order[game.current_turn_index]
-        if player.id != current_player_id:
-            raise Exception('It is not this player\'s turn')
+        # game = player.game
+        # current_player_id = game.turn_order[game.current_turn_index]
+        # if player.id != current_player_id:
+        #     raise Exception('It is not this player\'s turn')
 
         trader = TraderService.hire(player_id, sector_id)
         player.game.end_turn()
