@@ -15,11 +15,15 @@ class HireTrader(graphene.Mutation):
     @staticmethod
     def mutate(root, info, player_id, sector_id):
         player = Player.objects.get(id=player_id)
+        game = player.game
 
-        # game = player.game
-        # current_player_id = game.turn_order[game.current_turn_index]
-        # if player.id != current_player_id:
-        #     raise Exception('It is not this player\'s turn')
+        if player_id != game.active_player_id:
+            turn_error_message = f"It is not player {player_id}'s turn, it's player {player.game.active_player_id}'s turn."
+            raise Exception(turn_error_message)
+
+        if game.current_phase != 'hire_trader':
+            phase_error_message = f"It is not the right phase to hire a trader. The current phase is {game.current_phase}."
+            raise Exception(phase_error_message)
 
         trader = TraderService.hire(player_id, sector_id)
         player.game.end_turn()

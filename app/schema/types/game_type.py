@@ -16,7 +16,7 @@ class GameType(DjangoObjectType):
         fields = (
         'id', 'players', 'sectors',
         'product_cards_deck', 'event_cards_deck',
-        'turn_order', 'current_turn_index',
+        'active_player_id', 'players_order_ids',
         'current_phase')
 
     def resolve_product_cards_deck(self, info):
