@@ -27,7 +27,7 @@ class Game(models.Model):
         default='hire_trader',
     )
 
-    def restart(self):
+    def reset(self):
         self.players_order_index = 0
         self.current_phase = 'hire_trader'
         self.initialize_card_decks()
