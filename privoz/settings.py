@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'app',
     'graphene_django',
     'corsheaders',
+    'graphene_subscriptions'
 ]
 
 MIDDLEWARE = [
@@ -164,7 +165,11 @@ ALLOWED_HOSTS = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 if str(os.getenv('IS_LOCALHOST')) == 'True':
 

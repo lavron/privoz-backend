@@ -1,6 +1,9 @@
 def skip_static_requests(record):
-    return not (record.args[0].startswith('GET /static/') or record.args[0].startswith('GET /media/'))
-
+    arg0 = record.args[0]
+    if isinstance(arg0, str):
+        return not (arg0.startswith('GET /static/') or arg0.startswith('GET /media/'))
+    else:
+        return True
 
 LOGGING = {
     'version': 1,

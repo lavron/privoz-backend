@@ -2,6 +2,7 @@ import graphene
 
 from app.models import Player
 from app.schema.services.trader_service import TraderService
+from app.schema.types.player_type import PlayerType
 from app.schema.types.trader_type import TraderType
 
 
@@ -9,6 +10,8 @@ class HireTrader(graphene.Mutation):
     class Arguments:
         player_id = graphene.Int(required=True)
         sector_id = graphene.Int(required=True)
+
+    # Output = PlayerType
 
     trader = graphene.Field(lambda: TraderType)
 
@@ -26,5 +29,6 @@ class HireTrader(graphene.Mutation):
             raise Exception(phase_error_message)
 
         trader = TraderService.hire(player_id, sector_id)
+
         player.game.end_turn()
         return HireTrader(trader=trader)

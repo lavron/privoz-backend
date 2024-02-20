@@ -12,6 +12,5 @@ admin.site.index_title = "Welcome to Privoz the Game Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('api/box/<int:game_id>/', game_box, name='game_box'),
     path("graphql/", GraphQLView.as_view(graphiql=True, schema=schema)),
 ]
