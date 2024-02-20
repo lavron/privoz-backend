@@ -85,9 +85,11 @@ class Game(models.Model):
             self.players_order_index = 0
             print("👉🏻reset")
             self.move_to_next_phase()
-        self.save()
+        self.active_player_id = self.players_order_ids[self.players_order_index]
+        self.save() 
 
     def move_to_next_phase(self):
+        print("👉🏻move_to_next_phase")
         self.current_phase = PHASE_ORDER[self.current_phase]
 
     def __str__(self):
