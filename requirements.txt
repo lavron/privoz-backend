@@ -1,10 +1,13 @@
 asgiref==3.7.2
+channels
+channels_api
 daphne==2.5.0
 dj-database-url==2.1.0
 Django==5.0.2
 django-cors-headers==4.3.1
 graphene==3.2.0
 graphene-django
+graphene-django-subscriptions
 graphql-core
 graphql-relay
 gunicorn==21.2.0

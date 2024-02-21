@@ -1,4 +1,3 @@
-
 import graphene
 
 from app.schema.mutations.hire_trader import HireTrader
@@ -9,12 +8,14 @@ from app.schema.services.game_service import GameService
 from app.schema.services.box_service import BoxService
 from graphene_django.debug import DjangoDebug
 
+import asyncio
+from datetime import datetime
+
 
 class Mutation(graphene.ObjectType):
     hire_trader = HireTrader.Field()
     reset_game = ResetGame.Field()
     debug = graphene.Field(DjangoDebug, name='_debug')
-
 
 
 class Query(graphene.ObjectType):
@@ -33,5 +34,14 @@ class Query(graphene.ObjectType):
         return BoxService.get_content()
 
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
-# schema = graphene.Schema(query=Query, mutation=Mutation, subscription=Subscription)
+class Subscription(graphene.ObjectType):
+    time_of_day = graphene.String()
+
+    async def subscribe_time_of_day(root, info):
+        while True:
+            yield datetime.now().isoformat()
+            await asyncio.sleep(1)
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation, subscription=Subscription)
+
