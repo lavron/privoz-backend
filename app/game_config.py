@@ -21,8 +21,8 @@ PHASE_ORDER = {
     'event_card_purchase': 'product_card_acquisition',
     'product_card_acquisition': 'week_card_reveal',
     'week_card_reveal': 'negative_card_reveal',
-    'negative_card_reveal': 'event_card_play',
-    'event_card_play': 'sales',
-    'sales': 'paycheck_phase',
+    'negative_card_reveal': 'sales',
+    'sales': 'event_card_play',
+    'event_card_play': 'paycheck_phase',
     'paycheck_phase': 'hire_trader',  # back to first phase
 }

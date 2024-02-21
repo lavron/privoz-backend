@@ -11,8 +11,6 @@ class HireTrader(graphene.Mutation):
         player_id = graphene.Int(required=True)
         sector_id = graphene.Int(required=True)
 
-    # Output = PlayerType
-
     trader = graphene.Field(lambda: TraderType)
 
     @staticmethod
