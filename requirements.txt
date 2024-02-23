@@ -1,4 +1,4 @@
-aniso8601==7.0.0
+aniso8601==9.0.1
 asgiref==3.7.2
 attrs==23.2.0
 autobahn==23.6.2
@@ -6,17 +6,14 @@ Automat==22.10.0
 cffi==1.16.0
 channels==2.4.0
 constantly==23.10.4
-cryptography==42.0.3
 daphne==2.5.0
 dj-database-url==2.1.0
 Django==5.0.1
 django-cors-headers==4.3.1
-djangorestframework==3.14.0
-graphene==2.1.9
-graphene-django==2.16.0
-graphene-subscriptions==1.0.2
-graphql-core==2.3.2
-graphql-relay==2.0.1
+graphene==3.2.0
+graphene-django==3.2.0
+graphql-core==3.2.3
+graphql-relay==3.2.0
 gunicorn==21.2.0
 hyperlink==21.0.0
 idna==3.6
