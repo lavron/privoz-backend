@@ -1,18 +1,25 @@
-import graphene
+from typing import List
 
+import strawberry
+
+from app.models import Game
 from app.schema.types.game_type import GameType
-from app.schema.services.game_service import GameService
 
-game_service = GameService()
 
-class GameQuery(graphene.ObjectType):
-    game = graphene.Field(GameType, game_id=graphene.Int())
-    games = graphene.List(GameType)
+def last_game_id():
+    return Game.objects.order_by('-id').values_list('id', flat=True).first()
 
-    @staticmethod
-    def resolve_game(root, info, game_id):
-        return game_service.get_game(game_id)
 
-    @staticmethod
-    def resolve_games(root, info):
-        return game_service.get_all_games()
+@strawberry.type
+class GameQuery:
+    @strawberry.field
+    def game(self, info, game_id: int) -> GameType:
+        game_id = game_id if game_id else last_game_id()
+        try:
+            return Game.objects.get(id=game_id)
+        except Game.DoesNotExist:
+            raise ValueError(f'Game with id {game_id} does not exist')
+
+    @strawberry.field
+    def games(self, info) -> List[GameType]:
+        return Game.objects.all()

@@ -1,15 +1,13 @@
-from graphene_django import DjangoObjectType
-import graphene
+import strawberry_django
+from typing import Optional, List
 
-from app.schema.types.trader_type import TraderType
 from app.models import Player
+from app.schema.types.event_card_in_deck import EventCardInDeckType
+from app.schema.types.hero_type import HeroType
 
-
-class PlayerType(DjangoObjectType):
-    traders = graphene.List(TraderType)
-
-    class Meta:
-        model = Player
-
-    def resolve_traders(root, info):
-        return root.traders.all()
+@strawberry_django.type(Player)
+class PlayerType:
+    hero: HeroType
+    game: "GameType"
+    event_cards: List[EventCardInDeckType]
+    traders: Optional[List["TraderType"]]

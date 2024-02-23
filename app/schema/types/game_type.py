@@ -1,29 +1,45 @@
-import graphene
-from graphene_django import DjangoObjectType
+from typing import Optional, List
 
-from app.schema.types.box_type import ProductCardType, EventCardType
-from app.schema.types.player_type import PlayerType
+import strawberry_django
+import strawberry
+
 from app.models import Game
+from app.schema.types.event_card_deck_type import EventCardDeckType
+from app.schema.types.player_type import PlayerType
+from app.schema.types.product_card_deck_type import ProductCardDeckType
+from app.schema.types.sector_type import SectorType
+from asgiref.sync import sync_to_async
 
 
-class GameType(DjangoObjectType):
-    product_cards_deck = graphene.List(ProductCardType)
-    event_cards_deck = graphene.List(EventCardType)
-    players = graphene.List(PlayerType)
+@strawberry_django.type(
+    Game,
+    fields=["id", "players_count",
+            "active_player_id", "players_order_ids", "players_order_index",
+            "current_phase"])
+class GameType:
+    product_cards_deck: ProductCardDeckType
+    event_cards_deck: EventCardDeckType
+    sectors: List[SectorType]
+    players: List[PlayerType]
+    active_player_id: Optional[int]
+    players_order_ids: List[int]
 
-    class Meta:
-        model = Game
-        fields = (
-        'id', 'players', 'sectors',
-        'product_cards_deck', 'event_cards_deck',
-        'active_player_id', 'players_order_ids',
-        'current_phase')
+    #
+    async def resolve_sectors(self, info) -> List[SectorType]:
+        sectors = await sync_to_async(self.sectors.all, thread_sensitive=True)()
+        return [SectorType(sector_data) for sector_data in sectors]
 
-    def resolve_product_cards_deck(self, info):
-        return self.product_cards_deck.cards.all()
+    @strawberry.field
+    async def resolve_players(self, info) -> List[PlayerType]:
+        players = await sync_to_async(self.players.all, thread_sensitive=True)()
+        return [PlayerType(player_data) for player_data in players]
 
-    def resolve_event_cards_deck(self, info):
-        return self.event_cards_deck.cards.all()
+    @strawberry.field
+    async def resolve_product_cards_deck(self, info) -> ProductCardDeckType:
+        product_cards_deck = await sync_to_async(lambda: self.product_cards_deck)()
+        return ProductCardDeckType(product_cards_deck)
 
-    def resolve_players(self, info):
-        return self.players.all()
+    @strawberry.field
+    async def resolve_event_cards_deck(self, info) -> EventCardDeckType:
+        event_cards_deck = await sync_to_async(lambda: self.event_cards_deck)()
+        return EventCardDeckType(event_cards_deck)

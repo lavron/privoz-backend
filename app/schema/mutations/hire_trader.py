@@ -1,32 +1,37 @@
-import graphene
-
+import strawberry
 from app.models import Player
 from app.schema.services.trader_service import TraderService
 from app.schema.types.player_type import PlayerType
 from app.schema.types.trader_type import TraderType
 
 
-class HireTrader(graphene.Mutation):
-    class Arguments:
-        player_id = graphene.Int(required=True)
-        sector_id = graphene.Int(required=True)
+@strawberry.type
+class HireTraderOutput:
+    trader: TraderType
 
-    trader = graphene.Field(lambda: TraderType)
 
-    @staticmethod
-    def mutate(root, info, player_id, sector_id):
-        player = Player.objects.get(id=player_id)
+@strawberry.input
+class HireTraderInput:
+    player_id: int
+    sector_id: int
+
+
+@strawberry.type
+class Mutation:
+    @strawberry.mutation
+    def hire_trader(self, input: HireTraderInput) -> HireTraderOutput:
+        player = Player.objects.get(id=input.player_id)
         game = player.game
 
-        if player_id != game.active_player_id:
-            turn_error_message = f"It is not player {player_id}'s turn, it's player {player.game.active_player_id}'s turn."
+        if input.player_id != game.active_player_id:
+            turn_error_message = f"It is not player {input.player_id}'s turn, it's player {input.game.active_player_id}'s turn."
             raise Exception(turn_error_message)
 
         if game.current_phase != 'hire_trader':
-            phase_error_message = f"It is not the right phase to hire a trader. The current phase is {game.current_phase}."
+            phase_error_message = f"It is not the right phase to hire a trader. The current phase is {input.game.current_phase}."
             raise Exception(phase_error_message)
 
-        trader = TraderService.hire(player_id, sector_id)
+        trader = TraderService.hire(input.player_id, input.sector_id)
 
         player.game.end_turn()
-        return HireTrader(trader=trader)
+        return HireTraderOutput(trader=trader)

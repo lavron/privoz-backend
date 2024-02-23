@@ -1,11 +1,11 @@
 import graphene
 
-from app.schema.mutations.hire_trader import HireTrader
-from app.schema.mutations.reset_game import ResetGame
-from app.schema.types.box_type import BoxType
-from app.schema.types.game_type import GameType
-from app.schema.services.game_service import GameService
-from app.schema.services.box_service import BoxService
+from app.graphene_schema.mutations.hire_trader import HireTrader
+from app.graphene_schema.mutations.reset_game import ResetGame
+from app.graphene_schema.types.box_type import BoxType
+from app.graphene_schema.types.game_type import GameType
+from app.graphene_schema.services.game_service import GameService
+from app.graphene_schema.services.box_service import BoxService
 from graphene_django.debug import DjangoDebug
 
 import asyncio

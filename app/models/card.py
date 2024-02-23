@@ -13,7 +13,7 @@ class Card(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     image = models.CharField(max_length=100, blank=True)
-    quantity = models.IntegerField(default=1, db_default=1)
+    quantity = models.IntegerField(default=1)
     # location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default="deck")
 
     def __str__(self):

@@ -1,16 +1,21 @@
 from django.contrib import admin
 from django.urls import path
+from strawberry.django.views import AsyncGraphQLView
 
-# from app.views import game_box
-from graphene_django.views import GraphQLView
-from app.graphene_schema import schema
+from app.root_schema import schema
+from privoz import settings
 
 admin.site.site_header = "Privoz the Game"
 admin.site.site_title = "Admin Portal"
 admin.site.index_title = "Welcome to Privoz the Game Portal"
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("graphql/", GraphQLView.as_view(graphiql=True, schema=schema)),
-]
+    path(
+        'graphql/',
+        AsyncGraphQLView.as_view(
+            schema=schema,
+            graphiql=settings.DEBUG,
+            subscriptions_enabled=True,
+        ),
+    ),]

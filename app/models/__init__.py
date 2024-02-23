@@ -6,5 +6,4 @@ from .hero import Hero
 from .game import Game
 from .player import Player
 from .event_card import EventCardDeck
-from .product_card import ProductCardDeck
-
+from .product_card import ProductCardDeck, ProductCardInDeck,ProductCard

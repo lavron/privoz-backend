@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'graphene_django',
     'corsheaders',
+    'daphne',
 ]
 
 MIDDLEWARE = [
@@ -164,6 +164,12 @@ ALLOWED_HOSTS = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+STRAWBERRY_DJANGO = {
+    "FIELD_DESCRIPTION_FROM_HELP_TEXT": True,
+    "TYPE_DESCRIPTION_FROM_MODEL_DOCSTRING": True,
+}
+
+ASGI_APPLICATION = 'privoz.asgi.application'
 
 if str(os.getenv('IS_LOCALHOST')) == 'True':
 

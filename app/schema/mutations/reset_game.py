@@ -1,15 +1,19 @@
-import graphene
-
+import strawberry
 from app.schema.services.game_service import GameService
 from app.schema.types.game_type import GameType
 
 
-class ResetGame(graphene.Mutation):
-    game = graphene.Field(lambda: GameType)
-    class Arguments:
-        game_id = graphene.Int(required=False, default_value=None)
+@strawberry.type
+class ResetGameOutput:
+    game: GameType
 
-    @staticmethod
-    def mutate(root, info, game_id=None):
-        game = GameService.reset(game_id=game_id)
-        return ResetGame(game=game)
+@strawberry.input
+class ResetGameInput:
+    game_id: int = None
+
+@strawberry.type
+class Mutation:
+    @strawberry.mutation
+    def reset_game(self, input: ResetGameInput) -> ResetGameOutput:
+        game = GameService.reset(game_id=input.game_id)
+        return ResetGameOutput(game=game)
