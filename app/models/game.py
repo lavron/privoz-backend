@@ -4,7 +4,6 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 from app.game_config import INITIAL_COINS, PHASE_CHOICES, PHASE_ORDER
-from app.models import Sector, Hero
 from app.models.event_card import EventCardDeck
 from app.models.player import Player
 from app.models.product_card import ProductCardDeck
@@ -15,7 +14,7 @@ class Game(models.Model):
     product_cards_deck = models.ForeignKey(ProductCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
     event_cards_deck = models.ForeignKey(EventCardDeck, on_delete=models.CASCADE, related_name='games', null=True)
 
-    sectors = models.ManyToManyField(Sector, related_name='games', through='GameSector')
+    sectors = models.ManyToManyField('Sector', related_name='games', through='GameSector')
 
     active_player_id = models.IntegerField(null=True)
     players_order_ids = ArrayField(models.IntegerField(), default=list)
@@ -59,9 +58,11 @@ class Game(models.Model):
         self.event_cards_deck = EventCardDeck.create_and_initialize()
 
     def assign_all_sectors(self):
+        from .sector import Sector
         self.sectors.set(Sector.objects.all())
 
     def create_players(self):
+        from .hero import Hero
         heroes = list(Hero.objects.all())
         random.shuffle(heroes)
         heroes = heroes[:self.players_count]

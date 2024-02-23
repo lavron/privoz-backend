@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'daphne',
     'django.contrib.staticfiles',
     'app',
     'corsheaders',
-    'daphne',
 ]
 
 MIDDLEWARE = [

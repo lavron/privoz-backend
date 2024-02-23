@@ -1,29 +1,27 @@
+from typing import List
+
 import strawberry
-from app.schema.queries.game_query import GameQuery
-from app.schema.queries.box_query import BoxQuery
-from app.schema.mutations.hire_trader import Mutation as HireTraderMutation
-from app.schema.mutations.reset_game import Mutation as ResetGameMutation
-import asyncio
+
+from app.test_schema.queries.game_query import GameQuery, GameType
+from privoz.utils import last_game_id
 
 
-# class Query(GameQuery, BoxQuery):
 @strawberry.type
-class Query(BoxQuery, GameQuery):
+class Query(GameQuery):
+
     @strawberry.field
     def respond(self) -> str:
         return "Hello, World!"
 
-# @strawberry.type
-# class Mutation():
-#     pass
+    @strawberry.field
+    def games(self, info) -> List[GameType]:
+        return GameQuery.games(self, info)
 
-# @strawberry.type
-# class Subscription:
-#     @strawberry.subscription
-#     async def count(self, target: int = 100) -> int:
-#         for i in range(target):
-#             yield i
-#             await asyncio.sleep(0.5)
+    @strawberry.field
+    def game(self, info, game_id: int = None) -> GameType:
+        if not game_id:
+            game_id = last_game_id()
+        return GameQuery.game(self, info, game_id)
 
-# schema = strawberry.Schema(query=Query, mutation=Mutation)
+
 schema = strawberry.Schema(query=Query)

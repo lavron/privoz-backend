@@ -1,9 +1,9 @@
-from .sector import Sector
-from .product_card import ProductCard
-from .event_card import EventCard
-from .trader import Trader
-from .hero import Hero
+from .box import Box
+from .card import Card, Deck, CardInDeck
+from .event_card import EventCard, EventCardDeck, EventCardInDeck, EventCard
 from .game import Game
-from .player import Player
-from .event_card import EventCardDeck
-from .product_card import ProductCardDeck, ProductCardInDeck,ProductCard
+from .hero import Hero
+from .player import Player, PlayerEventCard, PlayerProductCard
+from .product_card import ProductCard, ProductCardDeck, ProductCardInDeck,ProductCard
+from .sector import Sector, GameSector
+from .trader import Trader

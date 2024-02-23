@@ -1,3 +1,6 @@
+from app.models import Game
+
+
 class DisableCSRFCheck:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -7,3 +10,6 @@ class DisableCSRFCheck:
             setattr(request, '_dont_enforce_csrf_checks', True)
         response = self.get_response(request)
         return response
+
+def last_game_id():
+    return Game.objects.order_by('-id').values_list('id', flat=True).first()
