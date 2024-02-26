@@ -21,19 +21,25 @@ ITEM_CHOICES = [
 
 class EventCard(Card):
     fortune = models.CharField(max_length=20, choices=FORTUNE_CHOICES, blank=True)
+
     target = models.CharField(max_length=20, choices=TARGET_CHOICES, blank=True)
+    # target_id = models.IntegerField(blank=True, null=True)
+    target_extra_profit = models.IntegerField(blank=True, null=True)
 
     # effects
     confiscation = models.BooleanField(blank=True, default=False)
     protection = models.BooleanField(blank=True, default=False)
+    extra_profit = models.IntegerField(blank=True, null=True)
 
     player_extra_profit = models.IntegerField(blank=True, null=True)
     trader_extra_profit = models.IntegerField(blank=True, null=True)
     product_extra_profit = models.IntegerField(blank=True, null=True)
 
+
     product_extra_item = models.IntegerField(blank=True, null=True)
 
     image = models.CharField(max_length=100, blank=True, default=EVENT_IMAGE_PLACEHOLDER)
+
 
 
 class EventCardDeck(Deck):
