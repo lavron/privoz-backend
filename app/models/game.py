@@ -20,6 +20,8 @@ class Game(models.Model):
     players_order_ids = ArrayField(models.IntegerField(), default=list)
     players_order_index = models.IntegerField(default=0)
 
+    trader_capacity = models.IntegerField(default=2)
+
     current_phase = models.CharField(
         max_length=30,
         choices=PHASE_CHOICES,

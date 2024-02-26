@@ -8,5 +8,5 @@ from app.strawberry_schema.types.trader_type import TraderType
 
 @strawberry_django.type(Sector, fields="__all__")
 class SectorType:
-    traders_ids = List[TraderType]
+    # traders = List[TraderType]
     pass

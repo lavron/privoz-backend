@@ -1,45 +1,46 @@
-from typing import Optional, List
-
-import strawberry_django
 import strawberry
-
+import strawberry_django
 from app.models import Game
-from app.schema.types.event_card_deck_type import EventCardDeckType
+from typing import List
+
+from app.schema.types.game_move_order_type import GameMoveOrderType
+# from app.schema.types.game_move_order_type import GameMoveOrderType
+from app.schema.types.game_static_type import GameStaticType
 from app.schema.types.player_type import PlayerType
-from app.schema.types.product_card_deck_type import ProductCardDeckType
 from app.schema.types.sector_type import SectorType
-from asgiref.sync import sync_to_async
 
 
-@strawberry_django.type(
-    Game,
-    fields=["id", "players_count",
-            "active_player_id", "players_order_ids", "players_order_index",
-            "current_phase"])
+@strawberry_django.type(Game)
 class GameType:
-    product_cards_deck: ProductCardDeckType
-    event_cards_deck: EventCardDeckType
-    sectors: List[SectorType]
+    move_order: GameMoveOrderType
     players: List[PlayerType]
-    active_player_id: Optional[int]
+    sectors: List[SectorType]
+
+    # product_cards_deck: ProductCardDeckType
+    # event_cards_deck: EventCardDeckType
+
+    @strawberry.field
+    def static_info(self, info) -> GameStaticType:
+        return GameStaticType(
+            id=self.id,
+            players_count=self.players_count,
+            trader_capacity=self.trader_capacity)
+
+    @strawberry.field
+    def move_order(self, info) -> GameMoveOrderType:
+        return GameMoveOrderType(
+            players_order_ids=self.players_order_ids,
+            # players_order_index=self.players_order_index,
+            active_player_id=self.active_player_id,
+            current_phase=self.current_phase)
+
+
+# write a class to hold the order of players_order_ids, active_player_id, and current_phase
+
+# write a class to hold the order of players_order_ids, active_player_id, and current_phase
+@strawberry_django.type(Game)
+class GameOrderType:
     players_order_ids: List[int]
-
-    #
-    async def resolve_sectors(self, info) -> List[SectorType]:
-        sectors = await sync_to_async(self.sectors.all, thread_sensitive=True)()
-        return [SectorType(sector_data) for sector_data in sectors]
-
-    @strawberry.field
-    async def resolve_players(self, info) -> List[PlayerType]:
-        players = await sync_to_async(self.players.all, thread_sensitive=True)()
-        return [PlayerType(player_data) for player_data in players]
-
-    @strawberry.field
-    async def resolve_product_cards_deck(self, info) -> ProductCardDeckType:
-        product_cards_deck = await sync_to_async(lambda: self.product_cards_deck)()
-        return ProductCardDeckType(product_cards_deck)
-
-    @strawberry.field
-    async def resolve_event_cards_deck(self, info) -> EventCardDeckType:
-        event_cards_deck = await sync_to_async(lambda: self.event_cards_deck)()
-        return EventCardDeckType(event_cards_deck)
+    active_player_id: int
+    current_phase: int
+    pass
