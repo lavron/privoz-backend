@@ -12,7 +12,6 @@ class TraderForUserType(DjangoObjectType):
         )
 
 
-
 class TraderForSectorType(DjangoObjectType):
     product_cards = graphene.List(ProductCardType)
 

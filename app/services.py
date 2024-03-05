@@ -1,5 +1,6 @@
 import random
 
+from app.game_config import PHASE_CHOICES
 from app.models import Sector, BaseEventCard, EventCard, BaseProductCard, ProductCard, Player
 from app.models import Hero
 from app.models.sector import BaseSector
@@ -42,10 +43,9 @@ class GameResourcesCreator:
             ids.append(player.pk)
         random.shuffle(ids)
 
-        game.queue = GameQueue.objects.create(game=game)
+        game.queue = GameQueue.objects.create(game=game, phase=PHASE_CHOICES[0][0])
         game.queue.players_order_ids = ids
-        print("👉🏻ids", ids)
         game.queue.active_player_id = ids[0]
-        print("👉🏻game.queue.active_player_id", game.queue.active_player_id)
+        game.queue.save()
         game.save()
 

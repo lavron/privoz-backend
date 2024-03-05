@@ -2,7 +2,6 @@ from app.models import Game
 
 
 def last_game_id():
-    print("👉🏻last_game_id")
     return Game.objects.order_by('-id').values_list('id', flat=True).first()
 
 
