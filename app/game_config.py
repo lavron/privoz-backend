@@ -22,5 +22,4 @@ PHASE_CHOICES = (
 PHASE_ORDER = {
     'hire_trader': 'sales',
     'sales': 'paycheck',
-    'paycheck': 'hire_trader',  # back to first phase
 }

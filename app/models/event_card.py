@@ -32,6 +32,9 @@ class BaseEventCard(BaseCard):
     extra_profit = models.IntegerField(blank=True, null=True)
     image = models.CharField(max_length=100, blank=True, default=EVENT_IMAGE_PLACEHOLDER)
 
+    class Meta:
+        verbose_name = "Event Card"
+        verbose_name_plural = "Event Cards"
 
 class EventCard(models.Model):
     card = models.ForeignKey(BaseEventCard, on_delete=models.CASCADE, related_name='event_card')

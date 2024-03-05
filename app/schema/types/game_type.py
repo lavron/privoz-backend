@@ -1,29 +1,36 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from app.schema.types.box_type import ProductCardType, EventCardType
+from app.models import GameQueue, Game
+
+from app.schema.types.event_card_type import EventCardType
 from app.schema.types.player_type import PlayerType
-from app.models import Game
+from app.schema.types.product_card_type import ProductCardType
+
+
+class GameQueueType(DjangoObjectType):
+    class Meta:
+        model = GameQueue
 
 
 class GameType(DjangoObjectType):
-    product_cards_deck = graphene.List(ProductCardType)
-    event_cards_deck = graphene.List(EventCardType)
+    product_cards = graphene.List(ProductCardType)
+    event_cards = graphene.List(EventCardType)
     players = graphene.List(PlayerType)
+    queue = graphene.Field(GameQueueType)
 
     class Meta:
         model = Game
         fields = (
-        'id', 'players', 'sectors',
-        'product_cards_deck', 'event_cards_deck',
-        'active_player_id', 'players_order_ids',
-        'current_phase')
+            'id', 'players', 'sectors',
+            'product_cards', 'event_cards',
+            'queue')
 
-    def resolve_product_cards_deck(self, info):
-        return self.product_cards_deck.cards.all()
+    def resolve_product_cards(self, info):
+        return self.product_cards.cards.all()
 
     def resolve_event_cards_deck(self, info):
-        return self.event_cards_deck.cards.all()
+        return self.event_cards.cards.all()
 
     def resolve_players(self, info):
         return self.players.all()
