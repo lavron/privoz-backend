@@ -2,7 +2,6 @@ import graphene
 
 from app.models import Player
 from app.schema.services.trader_service import TraderService
-from app.schema.types.player_type import PlayerType
 from app.schema.types.trader_type import TraderType
 
 

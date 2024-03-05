@@ -23,8 +23,8 @@ class Subscription(ObjectType):
     player_updated = graphene.Field(PlayerType)
     debug = graphene.Field(DjangoDebug, name='_debug')
 
-    def resolve_player_updated(root, info):
-        return player_updated.pipe(ops.map(lambda x: PlayerType(player=x)))
+    # def resolve_player_updated(root, info):
+    #     return player_updated.pipe(ops.map(lambda x: PlayerType(player=x)))
 
 class Query(graphene.ObjectType):
     box = graphene.Field(BoxType)

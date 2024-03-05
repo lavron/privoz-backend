@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.functional import cached_property
 
 
 class Sector(models.Model):
@@ -9,6 +10,11 @@ class Sector(models.Model):
         return self.name
 
 
-class GameSector(models.Model):
-    sector = models.ForeignKey(Sector, related_name='game_sector_instances', on_delete=models.CASCADE)
-    game = models.ForeignKey('Game', related_name='game_sector_instances', on_delete=models.CASCADE)
+class SectorInGame(models.Model):
+    sector = models.ForeignKey(Sector, related_name='sector_in_game', on_delete=models.CASCADE)
+    game = models.ForeignKey('Game', related_name='sector_in_game', on_delete=models.CASCADE)
+    traders = models.ManyToManyField('Trader', related_name='sector_in_game', blank=True, default=None)
+
+    @cached_property
+    def capacity(self):
+        return self.game.players_count

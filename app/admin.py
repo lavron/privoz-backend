@@ -1,19 +1,11 @@
 from django.contrib import admin
 
 from app.models import Hero, EventCard, ProductCard, Sector, Game, Trader, Player
-from app.models.event_card import EventCardDeck
-from app.models.product_card import ProductCardDeck
 
 admin.site.register(Player)
 admin.site.register(Hero)
-admin.site.register(EventCard, exclude=('location',))
+admin.site.register(EventCard, name='Event Cards')
 admin.site.register(ProductCard)
 admin.site.register(Sector)
 admin.site.register(Trader)
-admin.site.register(EventCardDeck)
-admin.site.register(ProductCardDeck)
-
-
-# class GameAdmin(admin.ModelAdmin):
-#     fields = ['players_count',]
-admin.site.register(Game, fields = ['players_count',])
+admin.site.register(Game, fields=['players_count', ])
