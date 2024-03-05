@@ -8,6 +8,7 @@ from app.models.sector import BaseSector
 class GameResourcesCreator:
     @staticmethod
     def create(game):
+        from app.models import GameQueue
 
         # Trader Capacity
         game.trader_capacity = game.players_count
@@ -37,8 +38,11 @@ class GameResourcesCreator:
             player.save()
             ids.append(player.pk)
         random.shuffle(ids)
+
+        game.queue = GameQueue.objects.create(game=game)
         game.queue.players_order_ids = ids
         game.queue.active_player_id = ids[0]
+
 
         game.save()
 

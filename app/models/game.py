@@ -40,10 +40,12 @@ class GameQueue(models.Model):
     players_order_index = models.IntegerField(default=0)
 
     phase = models.CharField(
-        max_length=30,
+        max_length=100,
         choices=PHASE_CHOICES,
         default=PHASE_CHOICES[0],
     )
+
+
 
     def end_turn(self):
         self.players_order_index += 1
