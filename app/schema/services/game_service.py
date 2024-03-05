@@ -8,17 +8,8 @@ def last_game_id():
 
 class GameService:
 
-    @classmethod
-    def reset(cls, game_id):
-        print("👉🏻game_id", game_id)
-        game = cls.get_game(game_id)
-        print("👉🏻game", game)
-        game.reset()
-        return game
-
     @staticmethod
     def get_game(game_id=None):
-        print("👉🏻get_game")
         game_id = game_id if game_id else last_game_id()
         try:
             return Game.objects.get(id=game_id)

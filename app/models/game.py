@@ -27,6 +27,7 @@ class Game(models.Model):
         super().save(*args, **kwargs)
         if is_new:
             GameResourcesCreator.create(self)
+            print("👉🏻self.queue", self.queue.active_player_id)
 
     def __str__(self):
         return 'Game ' + str(self.pk)

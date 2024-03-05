@@ -18,6 +18,7 @@ class Player(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             self.coins = INITIAL_COINS
+        super().save(*args, **kwargs)
 
     def reset(self):
         self.coins = 0

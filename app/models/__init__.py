@@ -6,4 +6,5 @@ from .player import Player
 from .sector import Sector, BaseSector
 from .trader import Trader
 from .game import Game, GameQueue
+from .trader import Trader
 

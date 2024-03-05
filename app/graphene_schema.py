@@ -1,22 +1,22 @@
 
 import graphene
 
-from app.schema.mutations.hire_trader import HireTrader
+# from app.schema.mutations.hire_trader import HireTrader
 from app.schema.types.game_type import GameType
 from app.schema.services.game_service import GameService
 from graphene_django.debug import DjangoDebug
-from graphene import ObjectType
+# from graphene import ObjectType
 
-from app.schema.types.player_type import PlayerType
-
-
-class Mutation(graphene.ObjectType):
-    hire_trader = HireTrader.Field()
-    debug = graphene.Field(DjangoDebug, name='_debug')
+# from app.schema.types.player_type import PlayerType
 
 
-class Subscription(ObjectType):
-    player_updated = graphene.Field(PlayerType)
+# class Mutation(graphene.ObjectType):
+#     hire_trader = HireTrader.Field()
+#     debug = graphene.Field(DjangoDebug, name='_debug')
+#
+#
+# class Subscription(ObjectType):
+#     player_updated = graphene.Field(PlayerType)
     # debug = graphene.Field(DjangoDebug, name='_debug')
 
     # def resolve_player_updated(root, info):
@@ -35,4 +35,4 @@ class Query(graphene.ObjectType):
 
 
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
+schema = graphene.Schema(query=Query)

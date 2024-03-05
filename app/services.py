@@ -15,13 +15,15 @@ class GameResourcesCreator:
 
         # EventCards
         event_cards = BaseEventCard.objects.all()
-        for event_card in event_cards:
-            EventCard.objects.create(card=event_card, game=game)
+        for card in event_cards:
+            for _ in range(card.quantity_in_deck):
+                EventCard.objects.create(card=card, game=game)
 
         # ProductCards
         product_cards = BaseProductCard.objects.all()
-        for product_card in product_cards:
-            ProductCard.objects.create(card=product_card, game=game)
+        for card in product_cards:
+            for _ in range(card.quantity_in_deck):
+                ProductCard.objects.create(card=card, game=game)
 
         # Sectors
         sectors = BaseSector.objects.all()
@@ -32,6 +34,7 @@ class GameResourcesCreator:
         heroes = list(Hero.objects.all())
         random.shuffle(heroes)
         heroes = heroes[:game.players_count]
+
         ids = []
         for hero in heroes:
             player = Player(hero=hero, game=game)
@@ -41,8 +44,8 @@ class GameResourcesCreator:
 
         game.queue = GameQueue.objects.create(game=game)
         game.queue.players_order_ids = ids
+        print("👉🏻ids", ids)
         game.queue.active_player_id = ids[0]
-
-
+        print("👉🏻game.queue.active_player_id", game.queue.active_player_id)
         game.save()
 

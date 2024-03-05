@@ -2,7 +2,7 @@ import graphene
 
 from app.models import Player
 from app.schema.services.trader_service import TraderService
-from app.schema.types.trader_type import TraderType
+from app.schema.types import TraderType
 
 
 class HireTrader(graphene.Mutation):

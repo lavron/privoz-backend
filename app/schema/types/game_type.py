@@ -27,10 +27,10 @@ class GameType(DjangoObjectType):
             'queue')
 
     def resolve_product_cards(self, info):
-        return self.product_cards.cards.all()
+        return self.product_cards.all()
 
     def resolve_event_cards_deck(self, info):
-        return self.event_cards.cards.all()
+        return self.event_cards.all()
 
     def resolve_players(self, info):
         return self.players.all()
