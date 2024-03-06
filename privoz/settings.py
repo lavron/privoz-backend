@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'app',
     'graphene_django',
     'corsheaders',
+    'import_export',
     # 'graphene_subscriptions'
 ]
 
