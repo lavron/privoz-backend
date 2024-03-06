@@ -1,22 +1,22 @@
-# from import_export import resources
-# from .models import BaseSector, BaseEventCard, BaseProductCard, Hero
-#
-#
-# class BaseSectorResource(resources.ModelResource):
-#     class Meta:
-#         model = BaseSector
-#
-#
-# class BaseEventCardResource(resources.ModelResource):
-#     class Meta:
-#         model = BaseEventCard
-#
-#
-# class BaseProductCardResource(resources.ModelResource):
-#     class Meta:
-#         model = BaseProductCard
-#
-#
-# class HeroResource(resources.ModelResource):
-#     class Meta:
-#         model = Hero
+from import_export import resources
+from .models import BaseSector, Event, Product, Hero
+
+
+class BaseSectorResource(resources.ModelResource):
+    class Meta:
+        model = BaseSector
+
+
+class EventResource(resources.ModelResource):
+    class Meta:
+        model = Event
+
+
+class ProductResource(resources.ModelResource):
+    class Meta:
+        model = Product
+
+
+class HeroResource(resources.ModelResource):
+    class Meta:
+        model = Hero
