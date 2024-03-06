@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from app.models import GameQueue, Game
+from app.models import GameQueue, Game, Sector
 from app.schema.types.player_type import PlayerType, BasePlayerType
 from app.schema.types.sector_type import SectorType
 
@@ -19,10 +19,12 @@ class GameQueueType(DjangoObjectType):
 
 class BaseGameType(DjangoObjectType):
     players = graphene.List(BasePlayerType)
+
     class Meta:
         model = Game
         fields = (
             'id', 'players')
+
 
 class GameType(DjangoObjectType):
     queue = graphene.Field(GameQueueType)
@@ -36,9 +38,7 @@ class GameType(DjangoObjectType):
             'queue')
 
     def resolve_sectors(self, info):
-        return self.sectors.all()
+        return Sector.objects.filter(game=self)
 
     def resolve_players(self, info):
         return self.players.all()
-
-

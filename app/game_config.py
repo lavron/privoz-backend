@@ -8,13 +8,13 @@ EVENT_IMAGE_PLACEHOLDER = 'https://dummyimage.com/512/62929E/ffffff.png&text=+++
 CARD_IMAGE_PLACEHOLDER = 'https://dummyimage.com/512/#E2DADB/000000.png&text=+++'
 
 PHASE_CHOICES = (
-    ('hire_trader', 'Hire Trader Phase'), # mutation
-    ('sales', 'Sales Phase'),
+    ('GET_TRADER', 'Hire Trader Phase'), # mutation
+    ('SALES', 'Sales Phase'),
     ('paycheck', 'Paycheck Phase'),
 )
 
 
 PHASE_ORDER = {
-    'hire_trader': 'sales',
-    'sales': 'paycheck',
+    'GET_TRADER': 'SALES',
+    'SALES': 'paycheck',
 }

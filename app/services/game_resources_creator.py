@@ -27,9 +27,13 @@ class GameResourcesCreator:
                 ProductCard.objects.create(card=card, game=game)
 
         # Sectors
-        sectors = BaseSector.objects.all()
+        base_sectors = BaseSector.objects.all()
+        print("👉🏻base_sectors", base_sectors)
+        for base_sector in base_sectors:
+            Sector.objects.create(sector=base_sector, game=game)
+        sectors = Sector.objects.filter(game=game)
         for sector in sectors:
-            Sector.objects.create(sector=sector, game=game)
+            print(f'Sector BaseSector: {sector.sector}, Game: {sector.game}, Id: {sector.id}')
 
         # Players
         heroes = list(Hero.objects.all())

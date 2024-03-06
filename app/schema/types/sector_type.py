@@ -3,6 +3,7 @@ from graphene_django import DjangoObjectType
 from app.models import Sector, BaseSector
 from app.schema.types import TraderForSectorType
 
+
 class BaseSectorType(DjangoObjectType):
     class Meta:
         model = BaseSector
@@ -15,6 +16,8 @@ class BaseSectorType(DjangoObjectType):
 class SectorType(DjangoObjectType):
     traders = graphene.List(TraderForSectorType)
     id = graphene.Int()
+    sector = graphene.Field(BaseSectorType)
+
     class Meta:
         model = Sector
         fields = (
@@ -23,11 +26,10 @@ class SectorType(DjangoObjectType):
         )
 
     def resolve_id(root, info):
-        return root.id
+        return root.sector.id
 
     def resolve_traders(root, info):
         return root.traders.all()
 
     def resolve_name(root, info):
         return root.name
-

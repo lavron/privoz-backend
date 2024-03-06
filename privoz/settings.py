@@ -32,8 +32,6 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 DEBUG = bool(os.getenv('DEBUG'))
 IS_LOCALHOST = bool(os.getenv('IS_LOCALHOST'))
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -98,7 +96,6 @@ elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
     DATABASES = {
         "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -172,7 +169,6 @@ CHANNEL_LAYERS = {
 }
 
 if str(os.getenv('IS_LOCALHOST')) == 'True':
-
     from .settings_local import *
 
     # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
