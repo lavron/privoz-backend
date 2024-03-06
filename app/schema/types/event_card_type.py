@@ -1,10 +1,10 @@
 from graphene_django import DjangoObjectType
-from app.models import BaseEventCard
+from app.models import Event
 
 
 class EventCardType(DjangoObjectType):
     class Meta:
-        model = BaseEventCard
+        model = Event
         fields = [
             'id',
             'name',

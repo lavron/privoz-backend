@@ -14,7 +14,7 @@ class BasePlayerType(DjangoObjectType):
 
 class PlayerType(DjangoObjectType):
     traders = graphene.List('app.schema.types.TraderForUserType')
-    product_cards = graphene.List('app.schema.types.BaseProductCardType')
+    product_cards = graphene.List('app.schema.types.ProductCardType')
     hero = graphene.Field('app.schema.types.HeroType')
 
     class Meta:
@@ -35,3 +35,4 @@ class PlayerType(DjangoObjectType):
 
     def resolve_hero(root, info):
         return root.hero
+

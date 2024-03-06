@@ -4,9 +4,9 @@ from .card import BaseCard
 from ..game_config import PRODUCT_IMAGE_PLACEHOLDER
 
 
-class BaseProductCard(BaseCard):
+class Product(BaseCard):
     is_legal = models.BooleanField(default=True)
-    sector = models.ForeignKey('BaseSector', related_name='product_cards', on_delete=models.CASCADE)
+    sector = models.ForeignKey('BaseSector', related_name='products', on_delete=models.CASCADE)
     sell_price = models.IntegerField()
     buy_price = models.IntegerField()
 
@@ -18,8 +18,10 @@ class BaseProductCard(BaseCard):
 
 
 class ProductCard(models.Model):
-    card = models.ForeignKey(BaseProductCard, on_delete=models.CASCADE, related_name='product_card')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_card')
     game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='product_card')
+    player = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='product_card', null=True)
+    trader = models.ForeignKey('Trader', on_delete=models.CASCADE, related_name='product_card', null=True)
 
     is_discarded = models.BooleanField(default=False)
     order = models.IntegerField(default=0)

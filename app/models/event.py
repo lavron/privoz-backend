@@ -26,7 +26,7 @@ EFFECT_CHOICES = [
 ]
 
 
-class BaseEventCard(BaseCard):
+class Event(BaseCard):
     effect = models.CharField(max_length=20, choices=EFFECT_CHOICES, blank=True)
     target = models.CharField(max_length=20, choices=TARGET_CHOICES, blank=True)
     extra_profit = models.IntegerField(blank=True, null=True)
@@ -37,7 +37,7 @@ class BaseEventCard(BaseCard):
         verbose_name_plural = "Event Cards"
 
 class EventCard(models.Model):
-    card = models.ForeignKey(BaseEventCard, on_delete=models.CASCADE, related_name='event_card')
+    card = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event_card')
     game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='event_card')
 
     is_discarded = models.BooleanField(default=False)

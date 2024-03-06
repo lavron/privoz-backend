@@ -8,13 +8,11 @@ class Command(BaseCommand):
     help = 'Delete all objects of specified models'
 
     def handle(self, *args, **kwargs):
-        BaseProductCard.objects.all().delete()
+        Product.objects.all().delete()
         BaseSector.objects.all().delete()
-        BaseEventCard.objects.all().delete()
         Hero.objects.all().delete()
         Player.objects.all().delete()
         Trader.objects.all().delete()
-        EventCard.objects.all().delete()
         Sector.objects.all().delete()
         ProductCard.objects.all().delete()
         Game.objects.all().delete()

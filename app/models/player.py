@@ -8,8 +8,7 @@ class Player(models.Model):
     hero = models.ForeignKey(Hero, related_name='players', on_delete=models.CASCADE, null=True)
     game = models.ForeignKey('Game', related_name='players', on_delete=models.CASCADE, null=True)
 
-    event_cards = models.ManyToManyField('EventCard')
-    product_cards = models.ManyToManyField('ProductCard')
+    product_cards = models.ManyToManyField('Product', through='ProductCard', related_name='players')
     coins = models.IntegerField(default=0)
 
     def __str__(self):

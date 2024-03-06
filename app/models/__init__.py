@@ -1,6 +1,6 @@
 from .card import BaseCard
-from .event_card import EventCard, BaseEventCard
-from .product_card import ProductCard, BaseProductCard
+from .event import EventCard, Event
+from .product import ProductCard, Product
 from .hero import Hero
 from .player import Player
 from .sector import Sector, BaseSector

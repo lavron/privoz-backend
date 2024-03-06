@@ -1,1 +1,171 @@
-[{"model": "app.baseeventcard", "pk": 10, "fields": {"name": "Addicts (narcos)", "description": "-1 to the selling price.", "quantity_in_deck": 10, "effect": "", "target": "sector", "extra_profit": null, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 3, "fields": {"name": "Federal police", "description": "Confiscate illegal goods plus a fine.", "quantity_in_deck": 10, "effect": "", "target": "sector", "extra_profit": null, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 15, "fields": {"name": "Porters", "description": "Goods +1 from the market for free.", "quantity_in_deck": 10, "effect": "extra_item", "target": "product", "extra_profit": null, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 14, "fields": {"name": "Transport arrived and brought people", "description": "Profit +1 from each seller.", "quantity_in_deck": 10, "effect": "profit", "target": "trader", "extra_profit": 1, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 13, "fields": {"name": "Regular customer", "description": "Profit +2 coins.", "quantity_in_deck": 10, "effect": "profit", "target": "player", "extra_profit": 2, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 12, "fields": {"name": "Underworld protection", "description": "Protection.", "quantity_in_deck": 10, "effect": "protection", "target": "sector", "extra_profit": null, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 11, "fields": {"name": "Priests (monks)", "description": "2 coins of donations for each seller.", "quantity_in_deck": 10, "effect": "profit", "target": "trader", "extra_profit": -2, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 9, "fields": {"name": "Beggars", "description": "-1 to the selling price.", "quantity_in_deck": 10, "effect": "profit", "target": "product", "extra_profit": -1, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 8, "fields": {"name": "Local police officer", "description": "2 coins of donations for each seller.", "quantity_in_deck": 10, "effect": "profit", "target": "trader", "extra_profit": -2, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 7, "fields": {"name": "Firefighters", "description": "2 coins of donations for each seller.", "quantity_in_deck": 10, "effect": "profit", "target": "trader", "extra_profit": -2, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 6, "fields": {"name": "Sanitary epidemiological station", "description": "2 coins of donations for each seller.", "quantity_in_deck": 10, "effect": "profit", "target": "trader", "extra_profit": -2, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 5, "fields": {"name": "Prosecutor's office", "description": "Confiscation of illegal goods plus a fine.", "quantity_in_deck": 10, "effect": "confiscation", "target": "sector", "extra_profit": null, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}, {"model": "app.baseeventcard", "pk": 4, "fields": {"name": "Mafia ('brothers') karabas and stas", "description": "2 coins of donations for each seller.", "quantity_in_deck": 10, "effect": "profit", "target": "trader", "extra_profit": -2, "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"}}]
+[
+  {
+    "model": "app.baseeventcard",
+    "pk": 10,
+    "fields": {
+      "name": "Addicts (narcos)",
+      "description": "-1 to the selling price.",
+      "quantity_in_deck": 10,
+      "effect": "",
+      "target": "sector",
+      "extra_profit": null,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 3,
+    "fields": {
+      "name": "Federal police",
+      "description": "Confiscate illegal goods plus a fine.",
+      "quantity_in_deck": 10,
+      "effect": "",
+      "target": "sector",
+      "extra_profit": null,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 15,
+    "fields": {
+      "name": "Porters",
+      "description": "Goods +1 from the market for free.",
+      "quantity_in_deck": 10,
+      "effect": "extra_item",
+      "target": "product",
+      "extra_profit": null,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 14,
+    "fields": {
+      "name": "Transport arrived and brought people",
+      "description": "Profit +1 from each seller.",
+      "quantity_in_deck": 10,
+      "effect": "profit",
+      "target": "trader",
+      "extra_profit": 1,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 13,
+    "fields": {
+      "name": "Regular customer",
+      "description": "Profit +2 coins.",
+      "quantity_in_deck": 10,
+      "effect": "profit",
+      "target": "player",
+      "extra_profit": 2,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 12,
+    "fields": {
+      "name": "Underworld protection",
+      "description": "Protection.",
+      "quantity_in_deck": 10,
+      "effect": "protection",
+      "target": "sector",
+      "extra_profit": null,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 11,
+    "fields": {
+      "name": "Priests (monks)",
+      "description": "2 coins of donations for each seller.",
+      "quantity_in_deck": 10,
+      "effect": "profit",
+      "target": "trader",
+      "extra_profit": -2,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 9,
+    "fields": {
+      "name": "Beggars",
+      "description": "-1 to the selling price.",
+      "quantity_in_deck": 10,
+      "effect": "profit",
+      "target": "product",
+      "extra_profit": -1,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 8,
+    "fields": {
+      "name": "Local police officer",
+      "description": "2 coins of donations for each seller.",
+      "quantity_in_deck": 10,
+      "effect": "profit",
+      "target": "trader",
+      "extra_profit": -2,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 7,
+    "fields": {
+      "name": "Firefighters",
+      "description": "2 coins of donations for each seller.",
+      "quantity_in_deck": 10,
+      "effect": "profit",
+      "target": "trader",
+      "extra_profit": -2,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 6,
+    "fields": {
+      "name": "Sanitary epidemiological station",
+      "description": "2 coins of donations for each seller.",
+      "quantity_in_deck": 10,
+      "effect": "profit",
+      "target": "trader",
+      "extra_profit": -2,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 5,
+    "fields": {
+      "name": "Prosecutor's office",
+      "description": "Confiscation of illegal goods plus a fine.",
+      "quantity_in_deck": 10,
+      "effect": "confiscation",
+      "target": "sector",
+      "extra_profit": null,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  },
+  {
+    "model": "app.baseeventcard",
+    "pk": 4,
+    "fields": {
+      "name": "Mafia ('brothers') karabas and stas",
+      "description": "2 coins of donations for each seller.",
+      "quantity_in_deck": 10,
+      "effect": "profit",
+      "target": "trader",
+      "extra_profit": -2,
+      "image": "https://dummyimage.com/512/62929E/ffffff.png&text=+++EVENT"
+    }
+  }
+]

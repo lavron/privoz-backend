@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from app.models import Trader
-from app.schema.types import BaseProductCardType
+from app.schema.types import ProductCardType
 
 
 class TraderForUserType(DjangoObjectType):
@@ -13,7 +13,7 @@ class TraderForUserType(DjangoObjectType):
 
 
 class TraderForSectorType(DjangoObjectType):
-    product_cards = graphene.List(BaseProductCardType)
+    product_cards = graphene.List(ProductCardType)
 
     class Meta:
         model = Trader

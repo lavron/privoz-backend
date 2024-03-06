@@ -1,7 +1,7 @@
 import random
 
 from app.game_config import PHASE_CHOICES
-from app.models import Sector, BaseEventCard, EventCard, BaseProductCard, ProductCard, Player
+from app.models import Sector, Product, ProductCard, Player
 from app.models import Hero
 from app.models.sector import BaseSector
 
@@ -14,21 +14,14 @@ class GameResourcesCreator:
         # Trader Capacity
         game.trader_capacity = game.players_count
 
-        # EventCards
-        event_cards = BaseEventCard.objects.all()
-        for card in event_cards:
-            for _ in range(card.quantity_in_deck):
-                EventCard.objects.create(card=card, game=game)
-
         # ProductCards
-        product_cards = BaseProductCard.objects.all()
-        for card in product_cards:
-            for _ in range(card.quantity_in_deck):
-                ProductCard.objects.create(card=card, game=game)
+        products = Product.objects.all()
+        for product in products:
+            for _ in range(product.quantity_in_deck):
+                ProductCard.objects.create(product=product, game=game)
 
         # Sectors
         base_sectors = BaseSector.objects.all()
-        print("👉🏻base_sectors", base_sectors)
         for base_sector in base_sectors:
             Sector.objects.create(sector=base_sector, game=game)
         sectors = Sector.objects.filter(game=game)

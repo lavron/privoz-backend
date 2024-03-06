@@ -8,13 +8,21 @@ EVENT_IMAGE_PLACEHOLDER = 'https://dummyimage.com/512/62929E/ffffff.png&text=+++
 CARD_IMAGE_PLACEHOLDER = 'https://dummyimage.com/512/#E2DADB/000000.png&text=+++'
 
 PHASE_CHOICES = (
+    ('DRAW_PRODUCT_CARDS', 'Draw Product Cards Phase'),
     ('GET_TRADER', 'Hire Trader Phase'), # mutation
     ('SALES', 'Sales Phase'),
-    ('paycheck', 'Paycheck Phase'),
+    ('PAYCHECK', 'Paycheck Phase'),
 )
 
 
 PHASE_ORDER = {
+    'DRAW_PRODUCT_CARDS': 'GET_TRADER',
     'GET_TRADER': 'SALES',
-    'SALES': 'paycheck',
+    'SALES': 'PAYCHECK',
+    'PAYCHECK': 'DRAW_PRODUCT_CARDS',
 }
+
+PHASES_COUNT = 7
+DRAW_PRODUCT_CARDS_COUNT = 7
+
+TRADER_SALARY = 1

@@ -1,1 +1,324 @@
-[{"model": "app.baseproductcard", "pk": 1, "fields": {"name": "Onion", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 2, "sell_price": 4, "buy_price": 2, "image": "onion.svg"}}, {"model": "app.baseproductcard", "pk": 2, "fields": {"name": "Zucchini", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 2, "sell_price": 6, "buy_price": 3, "image": "zucchini.svg"}}, {"model": "app.baseproductcard", "pk": 3, "fields": {"name": "Tomato", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 2, "sell_price": 9, "buy_price": 5, "image": "tomato.svg"}}, {"model": "app.baseproductcard", "pk": 4, "fields": {"name": "Apples", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 1, "sell_price": 4, "buy_price": 2, "image": "apples.svg"}}, {"model": "app.baseproductcard", "pk": 5, "fields": {"name": "Grapes", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 1, "sell_price": 6, "buy_price": 3, "image": "grapes.svg"}}, {"model": "app.baseproductcard", "pk": 6, "fields": {"name": "Strawberries", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 1, "sell_price": 9, "buy_price": 5, "image": "strawberries.svg"}}, {"model": "app.baseproductcard", "pk": 8, "fields": {"name": "Feta cheese", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 3, "sell_price": 9, "buy_price": 5, "image": "feta_cheese.svg"}}, {"model": "app.baseproductcard", "pk": 9, "fields": {"name": "Cheese", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 3, "sell_price": 12, "buy_price": 7, "image": "cheese.svg"}}, {"model": "app.baseproductcard", "pk": 10, "fields": {"name": "Anchovies", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 4, "sell_price": 6, "buy_price": 3, "image": "anchovies.svg"}}, {"model": "app.baseproductcard", "pk": 12, "fields": {"name": "Salmon", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 4, "sell_price": 12, "buy_price": 7, "image": "salmon.svg"}}, {"model": "app.baseproductcard", "pk": 13, "fields": {"name": "Chicken", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 5, "sell_price": 10, "buy_price": 5, "image": "chicken.svg"}}, {"model": "app.baseproductcard", "pk": 14, "fields": {"name": "Pork", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 5, "sell_price": 13, "buy_price": 7, "image": "pork.svg"}}, {"model": "app.baseproductcard", "pk": 16, "fields": {"name": "Gloves", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 6, "sell_price": 12, "buy_price": 7, "image": "gloves.svg"}}, {"model": "app.baseproductcard", "pk": 18, "fields": {"name": "Quilts", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 6, "sell_price": 18, "buy_price": 10, "image": "quilts.svg"}}, {"model": "app.baseproductcard", "pk": 19, "fields": {"name": "Cigarettes", "description": "", "quantity_in_deck": 10, "is_legal": false, "sector": 7, "sell_price": 9, "buy_price": 4, "image": "cigarettes.svg"}}, {"model": "app.baseproductcard", "pk": 20, "fields": {"name": "Beer", "description": "", "quantity_in_deck": 10, "is_legal": false, "sector": 7, "sell_price": 12, "buy_price": 5, "image": "beer.svg"}}, {"model": "app.baseproductcard", "pk": 21, "fields": {"name": "Wine", "description": "", "quantity_in_deck": 10, "is_legal": false, "sector": 7, "sell_price": 15, "buy_price": 6, "image": "wine.svg"}}, {"model": "app.baseproductcard", "pk": 22, "fields": {"name": "Vodka", "description": "", "quantity_in_deck": 10, "is_legal": false, "sector": 7, "sell_price": 19, "buy_price": 7, "image": "vodka.svg"}}, {"model": "app.baseproductcard", "pk": 23, "fields": {"name": "Drugs", "description": "", "quantity_in_deck": 10, "is_legal": false, "sector": 7, "sell_price": 25, "buy_price": 10, "image": "drugs.svg"}}, {"model": "app.baseproductcard", "pk": 17, "fields": {"name": "Hats", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 6, "sell_price": 15, "buy_price": 9, "image": "hats.svg"}}, {"model": "app.baseproductcard", "pk": 7, "fields": {"name": "Milk", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 3, "sell_price": 6, "buy_price": 3, "image": "milk.svg"}}, {"model": "app.baseproductcard", "pk": 15, "fields": {"name": "Sausage", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 5, "sell_price": 16, "buy_price": 9, "image": "sausage.svg"}}, {"model": "app.baseproductcard", "pk": 11, "fields": {"name": "Mackerel", "description": "", "quantity_in_deck": 10, "is_legal": true, "sector": 4, "sell_price": 9, "buy_price": 5, "image": "mackerel.svg"}}]
+[
+  {
+    "model": "app.baseproductcard",
+    "pk": 1,
+    "fields": {
+      "name": "Onion",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 2,
+      "sell_price": 4,
+      "buy_price": 2,
+      "image": "onion.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 2,
+    "fields": {
+      "name": "Zucchini",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 2,
+      "sell_price": 6,
+      "buy_price": 3,
+      "image": "zucchini.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 3,
+    "fields": {
+      "name": "Tomato",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 2,
+      "sell_price": 9,
+      "buy_price": 5,
+      "image": "tomato.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 4,
+    "fields": {
+      "name": "Apples",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 1,
+      "sell_price": 4,
+      "buy_price": 2,
+      "image": "apples.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 5,
+    "fields": {
+      "name": "Grapes",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 1,
+      "sell_price": 6,
+      "buy_price": 3,
+      "image": "grapes.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 6,
+    "fields": {
+      "name": "Strawberries",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 1,
+      "sell_price": 9,
+      "buy_price": 5,
+      "image": "strawberries.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 8,
+    "fields": {
+      "name": "Feta cheese",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 3,
+      "sell_price": 9,
+      "buy_price": 5,
+      "image": "feta_cheese.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 9,
+    "fields": {
+      "name": "Cheese",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 3,
+      "sell_price": 12,
+      "buy_price": 7,
+      "image": "cheese.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 10,
+    "fields": {
+      "name": "Anchovies",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 4,
+      "sell_price": 6,
+      "buy_price": 3,
+      "image": "anchovies.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 12,
+    "fields": {
+      "name": "Salmon",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 4,
+      "sell_price": 12,
+      "buy_price": 7,
+      "image": "salmon.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 13,
+    "fields": {
+      "name": "Chicken",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 5,
+      "sell_price": 10,
+      "buy_price": 5,
+      "image": "chicken.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 14,
+    "fields": {
+      "name": "Pork",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 5,
+      "sell_price": 13,
+      "buy_price": 7,
+      "image": "pork.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 16,
+    "fields": {
+      "name": "Gloves",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 6,
+      "sell_price": 12,
+      "buy_price": 7,
+      "image": "gloves.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 18,
+    "fields": {
+      "name": "Quilts",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 6,
+      "sell_price": 18,
+      "buy_price": 10,
+      "image": "quilts.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 19,
+    "fields": {
+      "name": "Cigarettes",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": false,
+      "sector": 7,
+      "sell_price": 9,
+      "buy_price": 4,
+      "image": "cigarettes.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 20,
+    "fields": {
+      "name": "Beer",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": false,
+      "sector": 7,
+      "sell_price": 12,
+      "buy_price": 5,
+      "image": "beer.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 21,
+    "fields": {
+      "name": "Wine",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": false,
+      "sector": 7,
+      "sell_price": 15,
+      "buy_price": 6,
+      "image": "wine.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 22,
+    "fields": {
+      "name": "Vodka",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": false,
+      "sector": 7,
+      "sell_price": 19,
+      "buy_price": 7,
+      "image": "vodka.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 23,
+    "fields": {
+      "name": "Drugs",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": false,
+      "sector": 7,
+      "sell_price": 25,
+      "buy_price": 10,
+      "image": "drugs.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 17,
+    "fields": {
+      "name": "Hats",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 6,
+      "sell_price": 15,
+      "buy_price": 9,
+      "image": "hats.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 7,
+    "fields": {
+      "name": "Milk",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 3,
+      "sell_price": 6,
+      "buy_price": 3,
+      "image": "milk.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 15,
+    "fields": {
+      "name": "Sausage",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 5,
+      "sell_price": 16,
+      "buy_price": 9,
+      "image": "sausage.svg"
+    }
+  },
+  {
+    "model": "app.baseproductcard",
+    "pk": 11,
+    "fields": {
+      "name": "Mackerel",
+      "description": "",
+      "quantity_in_deck": 10,
+      "is_legal": true,
+      "sector": 4,
+      "sell_price": 9,
+      "buy_price": 5,
+      "image": "mackerel.svg"
+    }
+  }
+]

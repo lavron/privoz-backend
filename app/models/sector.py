@@ -18,7 +18,3 @@ class Sector(models.Model):
     sector = models.ForeignKey(BaseSector, related_name='sector', on_delete=models.CASCADE)
     game = models.ForeignKey('Game', related_name='sector', on_delete=models.CASCADE)
     traders = models.ManyToManyField('Trader', related_name='sector_related', blank=True, default=None)
-
-    @cached_property
-    def capacity(self):
-        return self.game.players_count
