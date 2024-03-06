@@ -2,10 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 
 from app.models import GameQueue, Game
-
-from app.schema.types.event_card_type import EventCardType
-from app.schema.types.player_type import PlayerType
-from app.schema.types.product_card_type import ProductCardType
+from app.schema.types.player_type import PlayerType, BasePlayerType
 from app.schema.types.sector_type import SectorType
 
 
@@ -20,17 +17,12 @@ class GameQueueType(DjangoObjectType):
         return self.phase
 
 
-class GameStaticType(DjangoObjectType):
-    product_cards = graphene.List(ProductCardType)
-    event_cards = graphene.List(EventCardType)
-    players = graphene.List(PlayerType)
-
+class BaseGameType(DjangoObjectType):
+    players = graphene.List(BasePlayerType)
     class Meta:
         model = Game
         fields = (
-            'product_cards', 'sectors',
-            'queue')
-
+            'id', 'players')
 
 class GameType(DjangoObjectType):
     queue = graphene.Field(GameQueueType)
@@ -46,10 +38,7 @@ class GameType(DjangoObjectType):
     def resolve_sectors(self, info):
         return self.sectors.all()
 
-
-
-    # def resolve_product_cards(self, info):
-    #     return self.static.product_cards.all()
-    #
     def resolve_players(self, info):
         return self.players.all()
+
+

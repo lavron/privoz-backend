@@ -3,19 +3,18 @@ import graphene
 
 from app.models import Player
 
-#
-# class PlayerStaticType(DjangoObjectType):
-#     class Meta:
-#         model = Player
-#         fields = ['id', 'hero']
-#
-#     def resolve_hero(root, info):
-#         return root.hero
-#
+
+class BasePlayerType(DjangoObjectType):
+    class Meta:
+        model = Player
+        fields = [
+            'id',
+            'hero',
+        ]
 
 class PlayerType(DjangoObjectType):
     traders = graphene.List('app.schema.types.TraderForUserType')
-    product_cards = graphene.List('app.schema.types.ProductCardType')
+    product_cards = graphene.List('app.schema.types.BaseProductCardType')
     hero = graphene.Field('app.schema.types.HeroType')
 
     class Meta:

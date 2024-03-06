@@ -1,13 +1,13 @@
 import graphene
 
-from app.schema.types.game_type import GameType
+from app.schema.types.game_type import GameType, BaseGameType
 from app.schema.services.game_service import GameService
 
 game_service = GameService()
 
 class GameQuery(graphene.ObjectType):
     game = graphene.Field(GameType, game_id=graphene.Int())
-    games = graphene.List(GameType)
+    games = graphene.List(BaseGameType)
 
     @staticmethod
     def resolve_game(root, info, game_id):
