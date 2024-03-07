@@ -30,8 +30,11 @@ class PlayerType(DjangoObjectType):
     def resolve_traders(root, info):
         return root.traders.all()
 
-    def resolve_product_cards(root, info):
-        return root.product_cards.all()
+    def resolve_product_cards(self, info):
+        product_cards =self.product_cards.through.objects.filter(player=self)
+        for product_card in product_cards:
+            print("👉🏻product_card", product_card.__dict__)
+        return product_cards
 
     def resolve_hero(root, info):
         return root.hero

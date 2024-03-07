@@ -12,18 +12,3 @@ class BaseCard(models.Model):
 
     class Meta:
         abstract = True
-
-    # @classmethod
-    # def get_in_desk_model(cls):
-    #     raise NotImplementedError("This method should be implemented in subclasses.")
-
-#
-# class CardInGame(models.Model):
-#     is_discarded = models.BooleanField(default=False)
-#     order = models.IntegerField(default=0)
-#     # card = models.ForeignKey(BaseCard, on_delete=models.CASCADE)
-#     # game = models.ForeignKey('Game', on_delete=models.CASCADE)
-#
-#     class Meta:
-#         ordering = ['order']
-

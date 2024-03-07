@@ -1,5 +1,7 @@
 import random
 
+from django.db import transaction
+
 from app.game_config import PHASE_CHOICES
 from app.models import Sector, Product, ProductCard, Player
 from app.models import Hero
@@ -7,6 +9,16 @@ from app.models.sector import BaseSector
 
 
 class GameResourcesCreator:
+
+    @staticmethod
+    @transaction.atomic
+    def shuffle_cards(cards_qs):
+        cards = list(cards_qs)
+        random.shuffle(cards)
+        for i, card in enumerate(cards):
+            card.order = i
+            card.save()
+
     @staticmethod
     def create(game):
         from app.models import GameQueue
@@ -14,19 +26,19 @@ class GameResourcesCreator:
         # Trader Capacity
         game.trader_capacity = game.players_count
 
-        # ProductCards
+        # Products
         products = Product.objects.all()
         for product in products:
             for _ in range(product.quantity_in_deck):
                 ProductCard.objects.create(product=product, game=game)
+        products = ProductCard.objects.filter(game=game)
+        GameResourcesCreator.shuffle_cards(products)
 
         # Sectors
         base_sectors = BaseSector.objects.all()
         for base_sector in base_sectors:
             Sector.objects.create(sector=base_sector, game=game)
         sectors = Sector.objects.filter(game=game)
-        for sector in sectors:
-            print(f'Sector BaseSector: {sector.sector}, Game: {sector.game}, Id: {sector.id}')
 
         # Players
         heroes = list(Hero.objects.all())
@@ -45,4 +57,3 @@ class GameResourcesCreator:
         game.queue.active_player_id = ids[0]
         game.queue.save()
         game.save()
-

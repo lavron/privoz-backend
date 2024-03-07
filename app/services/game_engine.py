@@ -3,7 +3,42 @@ from django.db.models import Prefetch, Sum, F
 
 from app.game_config import DRAW_PRODUCT_CARDS_COUNT, TRADER_SALARY
 from app.models import ProductCard, Trader, Player
-from app.services import GameRulesChecker
+from app.services import GameResourcesCreator
+from abc import ABC, abstractmethod
+
+
+class PhaseCommand(ABC):
+    @abstractmethod
+    def execute(self, game_engine):
+        pass
+
+
+class DrawProductCardsCommand(PhaseCommand):
+    def execute(self, game_engine):
+        cards_to_assign = game_engine.draw_top_cards(DRAW_PRODUCT_CARDS_COUNT)
+        with transaction.atomic():
+            game_engine.assign_cards_to_player(game_engine.game.active_player, cards_to_assign)
+            for player in game_engine.players:
+                player.save()
+        game_engine.game.queue.next_turn()
+
+
+class GetTraderCommand(PhaseCommand):
+    def execute(self, game_engine):
+        # Your implementation for GET_TRADER phase
+        pass
+
+
+class MakeSalesCommand(PhaseCommand):
+    def execute(self, game_engine):
+        # Your implementation for SALES phase
+        pass
+
+
+class PaycheckCommand(PhaseCommand):
+    def execute(self, game_engine):
+        # Your implementation for PAYCHECK phase
+        pass
 
 
 class GameEngine:
@@ -11,39 +46,28 @@ class GameEngine:
         self.game = game
         self.players = self.game.players.all().prefetch_related(
             Prefetch('traders', queryset=Trader.objects.all().prefetch_related('product_cards')))
-
-    def handle_phase(self):
-        phase_dispatch = {
-            "DRAW_PRODUCT_CARDS": self.phase_draw_product_cards,
-            "GET_TRADER": self.phase_get_trader,
-            "SALES": self.phase_make_sales,
-            "PAYCHECK": self.phase_paycheck,
+        self.shuffle = GameResourcesCreator.shuffle_cards
+        self.phase_dispatch = {
+            "DRAW_PRODUCT_CARDS": DrawProductCardsCommand(),
+            "GET_TRADER": GetTraderCommand(),
+            "SALES": MakeSalesCommand(),
+            "PAYCHECK": PaycheckCommand(),
         }
 
-        func = phase_dispatch.get(self.game.queue.phase)
+    def handle_phase(self):
+        func = self.phase_dispatch.get(self.game.queue.phase)
         if func:
-            func()
+            func.execute(self)
         else:
             print(f"Unknown phase: {self.game.current_phase}")
 
-    def phase_draw_product_cards(self):
-        print("👉🏻GameEngine.distribute_product_cards()")
-        cards_to_assign = self.get_product_cards_for_player()
-
-        with transaction.atomic():
-            self.assign_cards_to_players(self.players, cards_to_assign)
-            for player in self.players:
-                player.save()
-        self.game.queue.move_to_next_phase()
 
     def phase_get_trader(self):
-        print("👉🏻GameEngine.get_trader()")
+        print("👉🏻GameEngine.get_trader() mutation")
         pass
-
 
     def phase_make_sales(self):
         print("👉🏻GameEngine.make_sales()")
-
         all_players = self.game.players.all().prefetch_related(
             Prefetch('traders', queryset=Trader.objects.all().prefetch_related('product_cards')))
 
@@ -56,7 +80,7 @@ class GameEngine:
                 trader.product_cards.clear()
 
             player.save()
-        self.game.queue.move_to_next_phase()
+        self.game.queue.next_phase()
 
     def phase_paycheck(self):
         print("👉🏻GameEngine.paycheck()")
@@ -64,22 +88,36 @@ class GameEngine:
             for _ in player.traders.all():
                 player.coins -= TRADER_SALARY
             player.save()
-        self.game.queue.move_to_next_phase()
+        self.game.queue.next_phase()
 
-    def get_product_cards_for_player(self):
-        cards = self.game.product_cards.all()[:DRAW_PRODUCT_CARDS_COUNT]
+    def phase_draw_product_cards(self):
+        cards_to_assign = self.draw_top_cards(DRAW_PRODUCT_CARDS_COUNT)
+        with transaction.atomic():
+            self.assign_cards_to_player(self.game.active_player, cards_to_assign)
+            for player in self.players:
+                player.save()
+        self.game.queue.next_turn()
+
+    def draw_top_cards(self, count):
+        cards = self.get_active_product_cards()[:count]
+        if len(cards) < count:
+            self.shuffle(cards)
+            cards = self.get_active_product_cards()[:count]
+        self.discard_cards(cards)
+        return cards
+
+    def get_active_product_cards(self):
+        return ProductCard.objects.filter(game=self.game, is_discarded=False).order_by('-order')
+
+    def discard_cards(self, cards):
         for card in cards:
             card.is_discarded = True
             card.save()
-        return cards
 
-    def assign_cards_to_players(self, players, cards_to_assign):
-        for player in players:
-            player.product_cards.add(*cards_to_assign)
-
-    def end_game(self):
-        # Logic for ending the game and making final calculations
-        pass
+    def assign_cards_to_player(self, player, cards_to_assign):
+        for card in cards_to_assign:
+            card.player = player
+            card.save()
 
 
 class BaseToInGameConverter:

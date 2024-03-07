@@ -13,7 +13,6 @@ class GameQueueType(DjangoObjectType):
             'active_player_id', 'players_order_ids', 'phase')
 
     def resolve_phase(self, info):
-        print("👉🏻self.phase", self.phase, type(self.phase))
         return self.phase
 
 

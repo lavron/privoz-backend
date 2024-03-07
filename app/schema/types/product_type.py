@@ -7,6 +7,7 @@ class ProductType(DjangoObjectType):
         model = Product
         exclude = ('game', 'quantity_in_deck')
 
+
 class ProductCardType(DjangoObjectType):
     class Meta:
         model = ProductCard

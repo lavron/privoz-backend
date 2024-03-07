@@ -31,6 +31,10 @@ class Game(models.Model):
     def __str__(self):
         return 'Game ' + str(self.pk)
 
+    @property
+    def active_player(self):
+        return self.players.get(pk=self.queue.active_player_id)
+
 
 class GameQueue(models.Model):
     game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='game_queue')
@@ -50,16 +54,16 @@ class GameQueue(models.Model):
         engine.handle_phase()
         self.save()
 
-
-
-    def end_turn(self):
+    def next_turn(self):
         self.players_order_index += 1
         if self.players_order_index == len(self.players_order_ids):
             self.players_order_index = 0
-            self.move_to_next_phase()
+            self.next_phase()
+        engine = GameEngine(self.game)
+        engine.handle_phase()
         self.active_player_id = self.players_order_ids[self.players_order_index]
+
         self.save()
 
-    def move_to_next_phase(self):
+    def next_phase(self):
         self.phase = PHASE_ORDER[self.phase]
-

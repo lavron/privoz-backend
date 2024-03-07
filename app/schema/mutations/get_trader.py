@@ -40,5 +40,5 @@ class GetTrader(graphene.Mutation):
             trader.product_cards.append(product_card)
         trader.save()
         player.save()
-        game.queue.end_turn()
+        game.queue.next_turn()
         return GetTrader(trader=trader)
