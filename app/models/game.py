@@ -59,9 +59,11 @@ class GameQueue(models.Model):
         if self.players_order_index == len(self.players_order_ids):
             self.players_order_index = 0
             self.next_phase()
+        self.active_player_id = self.players_order_ids[self.players_order_index]
+        print("👉🏻self.active_player_id", self.active_player_id)
         engine = GameEngine(self.game)
         engine.handle_phase()
-        self.active_player_id = self.players_order_ids[self.players_order_index]
+
 
         self.save()
 
