@@ -13,13 +13,16 @@ class GameRulesChecker:
             self.can_player_place_product_card(sector_id, product_card_id)
 
     def can_player_place_product_card(self, sector_id, product_card_id):
-        base_product_card = Product.objects.get(id=product_card_id)
-        base_sector = BaseSector.objects.get(id=sector_id)
-        if base_product_card.sector != base_sector:
-            raise Exception(f"Product card {product_card_id} ({base_product_card.name}) does not belong to sector {sector_id} ({base_sector.name}).")
+        print("👉🏻can_player_place_product_card....")
+        sector = Sector.objects.get(id=sector_id)
+        product_card = ProductCard.objects.get(id=product_card_id)
+        product = product_card.product
+        if product.sector != sector:
+            raise Exception(f"Product card {product_card_id} ({product_card.name}) does not belong to sector {sector_id} ({sector.name}).")
         print("👉🏻can_player_place_product_card ok!")
 
     def check_player_can_buy(self, product_cards_ids):
+        print("👉🏻check_player_can_buy....")
         total = 0
         player_coins = self.game.players.get(id=self.game.queue.active_player_id).coins
 
@@ -32,6 +35,7 @@ class GameRulesChecker:
         print("👉🏻check_player_can_buy ok!")
 
     def check_free_spots(self, sector_id):
+        print("👉🏻check_free_spots...")
         base_sector = BaseSector.objects.get(id=sector_id)
         sector = Sector.objects.get(sector=base_sector, game=self.game)
         if sector.traders.count() >= self.game.trader_capacity:
@@ -39,13 +43,15 @@ class GameRulesChecker:
         print("👉🏻check_free_spots ok!")
 
     def check_current_phase(self, current_phase):
+        print("👉🏻check_current_phase...")
         if current_phase != self.game.queue.phase:
             raise Exception(f"Invalid phase. The current phase is {self.game.queue.phase}.")
+        print("👉🏻check_current_phase ok!")
 
     def check_player_turn(self, player_id):
-        print("👉🏻player_id", player_id)
-        print("👉🏻self.game.queue.active_player_id", self.game.queue.active_player_id)
+        print("👉🏻check_player_turn...")
+        active_player_id = self.game.queue.active_player_id
         if player_id != self.game.queue.active_player_id:
-            return Exception(
+            raise Exception(
                 f"It is not player {player_id}'s turn, it's player {self.game.queue.active_player_id}'s turn.")
         print("👉🏻check_player_turn ok!")

@@ -39,6 +39,8 @@ class GameResourcesCreator:
         for base_sector in base_sectors:
             Sector.objects.create(sector=base_sector, game=game)
         sectors = Sector.objects.filter(game=game)
+        for sector in sectors:
+            print(sector.__dict__)
 
         # Players
         heroes = list(Hero.objects.all())

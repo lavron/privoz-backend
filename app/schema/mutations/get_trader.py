@@ -19,8 +19,7 @@ class GetTrader(graphene.Mutation):
 
         player = Player.objects.get(id=player_id)
         game = player.game
-        base_sector = BaseSector.objects.get(id=sector_id)
-        sector = Sector.objects.get(sector=base_sector, game=game)
+        sector = Sector.objects.get(id=sector_id)
 
         if not sector:
             raise Exception(f"Invalid sector id {sector_id}.")
@@ -28,17 +27,16 @@ class GetTrader(graphene.Mutation):
         check = GameRulesChecker(game)
         check.can_player_get_trader(player_id, sector_id, product_cards_ids)
 
-        trader = Trader.create(player_id, sector.id)
+        trader = Trader.create(player, sector)
 
-        for product_card_id in product_cards_ids:
-            base_product_card = Product.objects.get(id=product_card_id)
-            print("👉🏻base_product_card", base_product_card)
-            product_card = player.product_cards.filter(card=base_product_card, game=game).first()          
-            if not product_card:
-                raise Exception(f"Invalid product card id {product_card_id}.")
+        for id in product_cards_ids:
+            product_card = ProductCard.objects.get(id=id)
             player.product_cards.remove(product_card)
             trader.product_cards.append(product_card)
+
         trader.save()
+        print("👉🏻trader.__dict__", trader.__dict__)
         player.save()
+        print("👉🏻player.__dict__", player.__dict__)
         game.queue.next_turn()
         return GetTrader(trader=trader)

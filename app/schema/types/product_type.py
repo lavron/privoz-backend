@@ -5,7 +5,7 @@ from app.models import Product, ProductCard
 class ProductType(DjangoObjectType):
     class Meta:
         model = Product
-        exclude = ('game', 'quantity_in_deck')
+        exclude = ('game', 'quantity_in_deck', 'players', 'product_card')
 
 
 class ProductCardType(DjangoObjectType):
