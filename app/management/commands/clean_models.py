@@ -9,6 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         Product.objects.all().delete()
+        Event.objects.all().delete()
         BaseSector.objects.all().delete()
         Hero.objects.all().delete()
         Player.objects.all().delete()
