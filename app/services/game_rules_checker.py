@@ -51,7 +51,7 @@ class GameRulesChecker:
     def check_player_turn(self, player_id):
         print("👉🏻check_player_turn...")
         active_player_id = self.game.queue.active_player_id
-        if player_id != self.game.queue.active_player_id:
+        if player_id != active_player_id:
             raise Exception(
                 f"It is not player {player_id}'s turn, it's player {self.game.queue.active_player_id}'s turn.")
         print("👉🏻check_player_turn ok!")

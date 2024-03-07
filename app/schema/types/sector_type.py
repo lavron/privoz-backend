@@ -16,6 +16,7 @@ class BaseSectorType(DjangoObjectType):
 class SectorType(DjangoObjectType):
     traders = graphene.List(TraderForSectorType)
     id = graphene.Int()
+    name = graphene.String()
 
     class Meta:
         model = Sector

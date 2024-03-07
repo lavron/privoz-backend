@@ -62,42 +62,6 @@ class GameEngine:
             print(f"Unknown phase: {self.game.current_phase}")
 
 
-    def phase_get_trader(self):
-        print("👉🏻GameEngine.get_trader() mutation")
-        pass
-
-    def phase_make_sales(self):
-        print("👉🏻GameEngine.make_sales()")
-        all_players = self.game.players.all().prefetch_related(
-            Prefetch('traders', queryset=Trader.objects.all().prefetch_related('product_cards')))
-
-        for player in all_players:
-            product_cards_qs = ProductCard.objects.filter(trader__player=player)
-            player.coins = F('coins') + product_cards_qs.aggregate(total_sell_price=Sum('sell_price'))[
-                'total_sell_price']
-
-            for trader in player.traders.all():
-                trader.product_cards.clear()
-
-            player.save()
-        self.game.queue.next_phase()
-
-    def phase_paycheck(self):
-        print("👉🏻GameEngine.paycheck()")
-        for player in self.players:
-            for _ in player.traders.all():
-                player.coins -= TRADER_SALARY
-            player.save()
-        self.game.queue.next_phase()
-
-    def phase_draw_product_cards(self):
-        cards_to_assign = self.draw_top_cards(DRAW_PRODUCT_CARDS_COUNT)
-        with transaction.atomic():
-            self.assign_cards_to_player(self.game.active_player, cards_to_assign)
-            for player in self.players:
-                player.save()
-        self.game.queue.next_turn()
-
     def draw_top_cards(self, count):
         cards = self.get_active_product_cards()[:count]
         if len(cards) < count:
