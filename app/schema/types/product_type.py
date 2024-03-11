@@ -11,6 +11,7 @@ class ProductType(DjangoObjectType):
 
 class ProductCardType(DjangoObjectType):
     sector = graphene.Field(SectorForProductCardType)
+    product = graphene.Field(ProductType)
     class Meta:
         model = ProductCard
         fields = (

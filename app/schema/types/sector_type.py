@@ -13,6 +13,8 @@ class BaseSectorType(DjangoObjectType):
 
 
 class SectorForProductCardType(DjangoObjectType):
+    id = graphene.Int()
+
     class Meta:
         model = Sector
         fields = (
