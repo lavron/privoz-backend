@@ -1,7 +1,6 @@
 import graphene
 
-from app.models import Player, Trader, BaseSector, Sector, Product, ProductCard
-from app.schema.services.trader_service import TraderService
+from app.models import Player, Trader, Sector, ProductCard
 from app.schema.types import TraderForUserType
 from app.services.game_rules_checker import GameRulesChecker
 
@@ -35,8 +34,6 @@ class GetTrader(graphene.Mutation):
             trader.product_cards.append(product_card)
 
         trader.save()
-        print("👉🏻trader.__dict__", trader.__dict__)
         player.save()
-        print("👉🏻player.__dict__", player.__dict__)
         game.queue.next_turn()
         return GetTrader(trader=trader)
