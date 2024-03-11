@@ -1,7 +1,7 @@
 from graphene_django import DjangoObjectType
 import graphene
 
-from app.models import Player
+from app.models import Player, ProductCard
 
 
 class BasePlayerType(DjangoObjectType):
@@ -31,7 +31,11 @@ class PlayerType(DjangoObjectType):
         return root.traders.all()
 
     def resolve_product_cards(self, info):
-        product_cards =self.product_cards.through.objects.filter(player=self)
+        print("👉🏻self.__dict__", self.__dict__)
+        product_cards = ProductCard.objects.filter(player=self)
+        print("👉🏻product_cards", product_cards)
+        for product_card in product_cards:
+            print("👉🏻product_card", product_card.__dict__)
         return product_cards
 
     def resolve_hero(root, info):

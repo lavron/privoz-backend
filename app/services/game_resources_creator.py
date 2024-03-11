@@ -26,21 +26,21 @@ class GameResourcesCreator:
         # Trader Capacity
         game.trader_capacity = game.players_count
 
-        # Products
-        products = Product.objects.all()
-        for product in products:
-            for _ in range(product.quantity_in_deck):
-                ProductCard.objects.create(product=product, game=game)
-        products = ProductCard.objects.filter(game=game)
-        GameResourcesCreator.shuffle_cards(products)
-
-        # Sectors
+        # Sectors and ProductCards
         base_sectors = BaseSector.objects.all()
+        product_cards = []
         for base_sector in base_sectors:
-            Sector.objects.create(sector=base_sector, game=game)
-        sectors = Sector.objects.filter(game=game)
-        for sector in sectors:
-            print(sector.__dict__)
+            sector = Sector.objects.create(sector=base_sector, game=game)
+            base_sector_products = Product.objects.filter(sector=base_sector)
+            for product in base_sector_products:
+                for _ in range(product.quantity_in_deck):
+                    product_card = ProductCard(product=product, game=game, sector=sector)
+                    product_cards.append(product_card)
+        product_cards = ProductCard.objects.bulk_create(product_cards)
+        GameResourcesCreator.shuffle_cards(product_cards)
+        for product_card in product_cards:
+            print("👉🏻product_card", product_card.__dict__)
+
 
         # Players
         heroes = list(Hero.objects.all())
