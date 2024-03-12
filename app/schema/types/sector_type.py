@@ -14,6 +14,7 @@ class BaseSectorType(DjangoObjectType):
 
 class SectorForProductCardType(DjangoObjectType):
     id = graphene.Int()
+    name = graphene.String()
 
     class Meta:
         model = Sector
@@ -39,6 +40,7 @@ class SectorType(DjangoObjectType):
         fields = (
             'id',
             'traders',
+            'name',
         )
 
     def resolve_traders(self, info):
