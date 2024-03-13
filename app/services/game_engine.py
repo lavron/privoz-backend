@@ -63,18 +63,25 @@ class GameEngine:
         trader = Trader.create(player_id=player_id, sector_id=sector_id)
 
         product_cards = ProductCard.objects.filter(id__in=product_cards_ids)
+        amount = 0
         for product_card in product_cards:
             product_card.player = None
             product_card.save()
+            amount += product_card.product.buy_price
             trader.product_cards.add(product_card)
 
         trader.save()
         sector.traders.add(trader)
         sector.save()
-        print("👉🏻trader.__dict__", trader.__dict__)
+        self.charge_player(player_id, amount)
         self.game.queue.next_turn()
 
         return trader
+
+    def charge_player(self, player_id, amount):
+        player = Player.objects.get(id=player_id)
+        player.coins -= amount
+        player.save()
 
     def handle_phase(self):
         func = self.phase_dispatch.get(self.game.queue.phase)
