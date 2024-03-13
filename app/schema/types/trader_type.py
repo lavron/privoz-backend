@@ -14,6 +14,7 @@ class TraderForUserType(DjangoObjectType):
 
 class TraderForSectorType(DjangoObjectType):
     product_cards = graphene.List('app.schema.types.ProductCardType')
+    player = graphene.Field('app.schema.types.PlayerType')
 
     class Meta:
         model = Trader
