@@ -38,9 +38,6 @@ class GameResourcesCreator:
                     product_cards.append(product_card)
         product_cards = ProductCard.objects.bulk_create(product_cards)
         GameResourcesCreator.shuffle_cards(product_cards)
-        for product_card in product_cards:
-            print("👉🏻product_card", product_card.__dict__)
-
 
         # Players
         heroes = list(Hero.objects.all())
@@ -54,8 +51,16 @@ class GameResourcesCreator:
             ids.append(player.pk)
         random.shuffle(ids)
 
-        game.queue = GameQueue.objects.create(game=game, phase=PHASE_CHOICES[0][0])
-        game.queue.players_order_ids = ids
-        game.queue.active_player_id = ids[0]
-        game.queue.save()
-        game.save()
+        game.queue = GameQueue.objects.create(game=game, players_order_ids=ids)
+        game.queue.reset()
+
+    @staticmethod
+    def reset_game(self):
+        self.game.queue.reset()
+        self.game.queue.players_order_index = 0
+        self.game.queue.active_player_id = self.game.queue.players_order_ids[0]
+        self.game.queue.save()
+        self.game.save()
+        self.create(self.game)
+        self.game.save()
+        self.game.queue.init

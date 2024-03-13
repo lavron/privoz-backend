@@ -29,3 +29,5 @@ class ProductCard(models.Model):
     class Meta:
         ordering = ['order']
 
+    def __str__(self):
+        return self.product.name

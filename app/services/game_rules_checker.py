@@ -6,52 +6,43 @@ class GameRulesChecker:
         self.game = game
 
     def can_player_get_trader(self, player_id, sector_id, product_cards_ids):
-        self.check_current_phase('GET_TRADER')
-        self.check_player_turn(player_id)
-        self.check_free_spots(sector_id)
-        for product_card_id in product_cards_ids:
-            self.can_player_place_product_card(sector_id, product_card_id)
+        check = self
+        check.phase('GET_TRADER')
+        check.player_turn(player_id)
+        check.player_can_buy(product_cards_ids)
+        check.sector_spots_available(sector_id)
+        check.sector_for_products(sector_id, product_cards_ids)
 
-    def can_player_place_product_card(self, sector_id, product_card_id):
-        print("👉🏻can_player_place_product_card....")
-        sector = Sector.objects.get(id=sector_id)
-        product_card = ProductCard.objects.get(id=product_card_id)
-        product = product_card.product
-        if product.sector != sector:
-            raise Exception(f"Product card {product_card_id} ({product_card.name}) does not belong to sector {sector_id} ({sector.name}).")
-        print("👉🏻can_player_place_product_card ok!")
-
-    def check_player_can_buy(self, product_cards_ids):
-        print("👉🏻check_player_can_buy....")
-        total = 0
-        player_coins = self.game.players.get(id=self.game.queue.active_player_id).coins
-
-        for card_id in product_cards_ids:
-            base_card = self.game.product_cards.filter(id=card_id).first()
-            total += base_card.buy_price
-            if total > player_coins:
-                raise Exception(
-                    f"Player {self.game.queue.active_player_id} does not have enough coins to buy the card.")
-        print("👉🏻check_player_can_buy ok!")
-
-    def check_free_spots(self, sector_id):
-        print("👉🏻check_free_spots...")
-        base_sector = BaseSector.objects.get(id=sector_id)
-        sector = Sector.objects.get(sector=base_sector, game=self.game)
-        if sector.traders.count() >= self.game.trader_capacity:
-            raise Exception(f"Trader capacity for sector {sector_id} is full.")
-        print("👉🏻check_free_spots ok!")
-
-    def check_current_phase(self, current_phase):
-        print("👉🏻check_current_phase...")
+    def phase(self, current_phase):
         if current_phase != self.game.queue.phase:
             raise Exception(f"Invalid phase. The current phase is {self.game.queue.phase}.")
-        print("👉🏻check_current_phase ok!")
 
-    def check_player_turn(self, player_id):
-        print("👉🏻check_player_turn...")
+    def player_turn(self, player_id):
         active_player_id = self.game.queue.active_player_id
         if player_id != active_player_id:
             raise Exception(
                 f"It is not player {player_id}'s turn, it's player {self.game.queue.active_player_id}'s turn.")
-        print("👉🏻check_player_turn ok!")
+
+    def player_can_buy(self, product_cards_ids):
+        sum_coins = 0
+        player_coins = self.game.players.get(id=self.game.queue.active_player_id).coins
+
+        for card_id in product_cards_ids:
+            product_card = ProductCard.objects.get(id=card_id)
+            buy_price = product_card.product.buy_price
+            sum_coins += buy_price
+            if sum_coins > player_coins:
+                raise Exception(
+                    f"Player {self.game.queue.active_player_id} does not have enough coins to buy the card.")
+
+    def sector_spots_available(self, sector_id):
+        sector = Sector.objects.get(id=sector_id)
+        if sector.traders.count() >= self.game.trader_capacity:
+            raise Exception(f"Trader capacity for sector {sector_id} is full.")
+
+    def sector_for_products(self, sector_id, product_cards_ids):
+        for product_card_id in product_cards_ids:
+            product_card = ProductCard.objects.get(id=product_card_id)
+            if product_card.sector.id != sector_id:
+                raise Exception(
+                    f"Product card {product_card_id} ({product_card.product.name}) does not belong to sector {sector_id} ({sector.name}).")

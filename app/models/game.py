@@ -47,6 +47,7 @@ class GameQueue(models.Model):
         max_length=100,
         choices=PHASE_CHOICES,
         default=PHASE_CHOICES[0],
+        null=True
     )
 
     def init(self):
@@ -60,7 +61,6 @@ class GameQueue(models.Model):
             self.players_order_index = 0
             self.next_phase()
         self.active_player_id = self.players_order_ids[self.players_order_index]
-        print("👉🏻self.active_player_id", self.active_player_id)
         engine = GameEngine(self.game)
         engine.handle_phase()
 
@@ -69,3 +69,10 @@ class GameQueue(models.Model):
 
     def next_phase(self):
         self.phase = PHASE_ORDER[self.phase]
+
+    def reset(self):
+        self.phase = PHASE_CHOICES[0][0]
+        self.players_order_index = 0
+        self.active_player_id = self.players_order_ids[0]
+        self.save()
+        self.game.save()

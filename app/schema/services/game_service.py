@@ -25,10 +25,3 @@ class GameService:
         game.save()
         return game
 
-    def shuffle_product_cards_deck(self, game_id=None):
-        game = self.get_game(game_id)
-        game.product_cards.shuffle()
-
-    def shuffle_event_cards_deck(self, game_id=None):
-        game = self.get_game(game_id)
-        game.event_cards.shuffle()

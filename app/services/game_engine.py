@@ -2,8 +2,8 @@ from django.db import transaction
 from django.db.models import Prefetch, Sum, F
 
 from app.game_config import DRAW_PRODUCT_CARDS_COUNT, TRADER_SALARY
-from app.models import ProductCard, Trader, Player
-from app.services import GameResourcesCreator
+from app.models import ProductCard, Trader, Player, Sector
+from app.services import GameResourcesCreator, GameRulesChecker
 from abc import ABC, abstractmethod
 
 
@@ -53,6 +53,28 @@ class GameEngine:
             "SALES": MakeSalesCommand(),
             "PAYCHECK": PaycheckCommand(),
         }
+        self.check = GameRulesChecker(self.game)
+
+    def create_trader(self, player_id, sector_id, product_cards_ids):
+
+        self.check.can_player_get_trader(player_id, sector_id, product_cards_ids)
+
+        sector = Sector.objects.get(id=sector_id)
+        trader = Trader.create(player_id=player_id, sector_id=sector_id)
+
+        product_cards = ProductCard.objects.filter(id__in=product_cards_ids)
+        for product_card in product_cards:
+            product_card.player = None
+            product_card.save()
+            trader.product_cards.add(product_card)
+
+        trader.save()
+        sector.traders.add(trader)
+        sector.save()
+        print("👉🏻trader.__dict__", trader.__dict__)
+        self.game.queue.next_turn()
+
+        return trader
 
     def handle_phase(self):
         func = self.phase_dispatch.get(self.game.queue.phase)
@@ -60,7 +82,6 @@ class GameEngine:
             func.execute(self)
         else:
             print(f"Unknown phase: {self.game.current_phase}")
-
 
     def draw_top_cards(self, count):
         cards = self.get_active_product_cards()[:count]

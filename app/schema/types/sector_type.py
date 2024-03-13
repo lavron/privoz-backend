@@ -44,7 +44,7 @@ class SectorType(DjangoObjectType):
         )
 
     def resolve_traders(self, info):
-        return self.traders.all()
+        return self.trader_related.all()
 
     def resolve_name(root, info):
         return root.sector.name

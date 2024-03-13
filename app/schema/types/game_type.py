@@ -39,5 +39,7 @@ class GameType(DjangoObjectType):
     def resolve_sectors(self, info):
         return Sector.objects.filter(game=self)
 
+
+
     def resolve_players(self, info):
         return self.players.all()
