@@ -1,5 +1,3 @@
-import random
-
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
@@ -10,6 +8,7 @@ from django.core.validators import MaxValueValidator
 from app.models.sector import BaseSector
 from app.services import GameResourcesCreator
 from app.services.game_engine import GameEngine
+
 
 
 class Game(models.Model):
@@ -56,12 +55,15 @@ class GameQueue(models.Model):
         self.save()
 
     def next_turn(self):
+        from app.schema.subscriptions.subscription import update_queue
         self.players_order_index += 1
         if self.players_order_index == len(self.players_order_ids):
             self.players_order_index = 0
             self.next_phase()
         self.active_player_id = self.players_order_ids[self.players_order_index]
+        update_queue(self)
         engine = GameEngine(self.game)
+        print("👉🏻next_turn", self.players_order_index)
         engine.handle_phase()
 
 
@@ -69,6 +71,7 @@ class GameQueue(models.Model):
 
     def next_phase(self):
         self.phase = PHASE_ORDER[self.phase]
+        print("👉🏻self.phase", self.phase)
 
     def reset(self):
         self.phase = PHASE_CHOICES[0][0]

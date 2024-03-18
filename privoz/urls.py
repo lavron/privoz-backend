@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path
 
-# from app.views import game_box
 from graphene_django.views import GraphQLView
 from app.graphene_schema import schema
 

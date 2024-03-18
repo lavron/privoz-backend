@@ -35,6 +35,7 @@ IS_LOCALHOST = bool(os.getenv('IS_LOCALHOST'))
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +46,6 @@ INSTALLED_APPS = [
     'graphene_django',
     'corsheaders',
     'import_export',
-    # 'graphene_subscriptions'
 ]
 
 MIDDLEWARE = [
@@ -163,26 +163,3 @@ ALLOWED_HOSTS = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
-
-if str(os.getenv('IS_LOCALHOST')) == 'True':
-    from .settings_local import *
-
-    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    # STATIC_URL = 'static/'
-    # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    # MEDIA_URL = '/media/'
-    # STATICFILES_DIRS = (
-    #     os.path.join(os.path.dirname(__file__), "static"),
-    # )
-
-# else:
-#
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#     STATICFILES_DIRS = (
-#         os.path.join(os.path.dirname(__file__), "static"),
-#     )
