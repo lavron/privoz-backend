@@ -2,7 +2,6 @@ import random
 
 from django.db import transaction
 
-from app.game_config import PHASE_CHOICES
 from app.models import Sector, Product, ProductCard, Player
 from app.models import Hero
 from app.models.sector import BaseSector
