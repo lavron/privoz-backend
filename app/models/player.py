@@ -33,3 +33,4 @@ class Player(models.Model):
         for product_card in product_cards:
             self.product_cards.add(product_card)
         self.save()
+

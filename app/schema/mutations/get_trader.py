@@ -15,7 +15,6 @@ class GetTrader(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, player_id, sector_id, product_cards_ids):
-
         player = Player.objects.get(id=player_id)
         game = player.game
 

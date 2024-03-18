@@ -9,7 +9,7 @@ class GameRulesChecker:
         check = self
         check.phase('GET_TRADER')
         check.player_turn(player_id)
-        check.player_can_buy(product_cards_ids)
+        check.player_can_buy(player_id, product_cards_ids)
         check.sector_spots_available(sector_id)
         check.sector_for_products(sector_id, product_cards_ids)
 
@@ -23,9 +23,9 @@ class GameRulesChecker:
             raise Exception(
                 f"It is not player {player_id}'s turn, it's player {self.game.queue.active_player_id}'s turn.")
 
-    def player_can_buy(self, product_cards_ids):
+    def player_can_buy(self, player_id, product_cards_ids):
         sum_coins = 0
-        player_coins = self.game.players.get(id=self.game.queue.active_player_id).coins
+        player_coins = self.game.players.get(id=player_id).coins
 
         for card_id in product_cards_ids:
             product_card = ProductCard.objects.get(id=card_id)

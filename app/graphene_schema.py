@@ -1,6 +1,7 @@
 import graphene
 
 from app.schema.mutations import GetTrader
+from app.schema.subscriptions.subscription import Subscription
 from app.schema.types.game_type import GameType
 from app.schema.services.game_service import GameService
 from graphene_django.debug import DjangoDebug
@@ -32,4 +33,4 @@ class Query(graphene.ObjectType):
         return GameService.get_all_games()
 
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
+schema = graphene.Schema(query=Query, mutation=Mutation, subscription=Subscription)

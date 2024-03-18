@@ -1,10 +1,11 @@
 from django.db import transaction
-from django.db.models import Prefetch, Sum, F
+from django.db.models import Prefetch
 
 from app.game_config import DRAW_PRODUCT_CARDS_COUNT, TRADER_SALARY
 from app.models import ProductCard, Trader, Player, Sector
 from app.services import GameResourcesCreator, GameRulesChecker
 from abc import ABC, abstractmethod
+
 
 
 class PhaseCommand(ABC):
@@ -15,11 +16,16 @@ class PhaseCommand(ABC):
 
 class DrawProductCardsCommand(PhaseCommand):
     def execute(self, game_engine):
+        from app.schema.subscriptions.subscription import update_player
+
         cards_to_assign = game_engine.draw_top_cards(DRAW_PRODUCT_CARDS_COUNT)
-        with transaction.atomic():
-            game_engine.assign_cards_to_player(game_engine.game.active_player, cards_to_assign)
-            for player in game_engine.players:
-                player.save()
+        active_player = game_engine.game.active_player
+
+        game_engine.assign_cards_to_player(active_player, cards_to_assign)
+        game_engine.game.active_player.save()
+
+        update_player(active_player)
+
         game_engine.game.queue.next_turn()
 
 
@@ -31,14 +37,28 @@ class GetTraderCommand(PhaseCommand):
 
 class MakeSalesCommand(PhaseCommand):
     def execute(self, game_engine):
-        # Your implementation for SALES phase
-        pass
+        from app.schema.subscriptions.subscription import update_player
+        
+        print("👉🏻MakeSalesCommand")
+
+        active_player = game_engine.game.active_player
+
+        for trader in active_player.traders.all():
+            for product_card in trader.product_cards.all():
+                active_player.coins += product_card.product.sell_price
+        active_player.save()
+        update_player(active_player)
+        game_engine.game.queue.next_turn()
 
 
 class PaycheckCommand(PhaseCommand):
     def execute(self, game_engine):
-        # Your implementation for PAYCHECK phase
-        pass
+        from app.schema.subscriptions.subscription import update_player
+        active_player = game_engine.game.active_player
+        for trader in active_player.traders.all():
+            active_player.coins -= TRADER_SALARY
+        active_player.save()
+        update_player(active_player)
 
 
 class GameEngine:
@@ -57,10 +77,13 @@ class GameEngine:
 
     def create_trader(self, player_id, sector_id, product_cards_ids):
 
+        from app.schema.subscriptions.subscription import update_player, update_sector
+
         self.check.can_player_get_trader(player_id, sector_id, product_cards_ids)
 
         sector = Sector.objects.get(id=sector_id)
         trader = Trader.create(player_id=player_id, sector_id=sector_id)
+        player = Player.objects.get(id=player_id)
 
         product_cards = ProductCard.objects.filter(id__in=product_cards_ids)
         amount = 0
@@ -73,19 +96,24 @@ class GameEngine:
         trader.save()
         sector.traders.add(trader)
         sector.save()
-        self.charge_player(player_id, amount)
+        self.charge_player(player, amount)
+
+        update_player(player_id)
+        update_sector(sector_id)
+
         self.game.queue.next_turn()
 
         return trader
 
-    def charge_player(self, player_id, amount):
-        player = Player.objects.get(id=player_id)
+    def charge_player(self, player, amount):
         player.coins -= amount
         player.save()
 
     def handle_phase(self):
+        print("👉🏻handle_phase",self.game.queue.phase )
         func = self.phase_dispatch.get(self.game.queue.phase)
         if func:
+            print("👉🏻func, func")
             func.execute(self)
         else:
             print(f"Unknown phase: {self.game.current_phase}")
@@ -111,12 +139,3 @@ class GameEngine:
             card.player = player
             card.save()
 
-
-class BaseToInGameConverter:
-
-    @staticmethod
-    def convert(game):
-        game_engine = GameEngine(game)
-        game_engine.handle_phase()
-        game.save()
-        return game

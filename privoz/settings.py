@@ -35,6 +35,7 @@ IS_LOCALHOST = bool(os.getenv('IS_LOCALHOST'))
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'import_export',
     'channels',
-    # 'graphene_subscriptions'
 ]
 
 MIDDLEWARE = [
@@ -170,20 +170,4 @@ CHANNEL_LAYERS = {
     }
 }
 
-if str(os.getenv('IS_LOCALHOST')) == 'True':
-    from .settings_local import *
-
-    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    # STATIC_URL = 'static/'
-    # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    # MEDIA_URL = '/media/'
-    # STATICFILES_DIRS = (
-    #     os.path.join(os.path.dirname(__file__), "static"),
-    # )
-
-# else:
-#
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#     STATICFILES_DIRS = (
-#         os.path.join(os.path.dirname(__file__), "static"),
-#     )
+ASGI_APPLICATION = 'app.routing.application'
