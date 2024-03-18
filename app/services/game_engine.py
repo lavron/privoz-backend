@@ -16,15 +16,12 @@ class PhaseCommand(ABC):
 
 class DrawProductCardsCommand(PhaseCommand):
     def execute(self, game_engine):
-        from app.schema.subscriptions.subscription import update_player
 
         cards_to_assign = game_engine.draw_top_cards(DRAW_PRODUCT_CARDS_COUNT)
         active_player = game_engine.game.active_player
 
         game_engine.assign_cards_to_player(active_player, cards_to_assign)
         game_engine.game.active_player.save()
-
-        update_player(active_player)
 
         game_engine.game.queue.next_turn()
 
@@ -37,8 +34,6 @@ class GetTraderCommand(PhaseCommand):
 
 class MakeSalesCommand(PhaseCommand):
     def execute(self, game_engine):
-        from app.schema.subscriptions.subscription import update_player
-        
         print("👉🏻MakeSalesCommand")
 
         active_player = game_engine.game.active_player
@@ -47,18 +42,15 @@ class MakeSalesCommand(PhaseCommand):
             for product_card in trader.product_cards.all():
                 active_player.coins += product_card.product.sell_price
         active_player.save()
-        update_player(active_player)
         game_engine.game.queue.next_turn()
 
 
 class PaycheckCommand(PhaseCommand):
     def execute(self, game_engine):
-        from app.schema.subscriptions.subscription import update_player
         active_player = game_engine.game.active_player
         for trader in active_player.traders.all():
             active_player.coins -= TRADER_SALARY
         active_player.save()
-        update_player(active_player)
 
 
 class GameEngine:
@@ -77,7 +69,6 @@ class GameEngine:
 
     def create_trader(self, player_id, sector_id, product_cards_ids):
 
-        from app.schema.subscriptions.subscription import update_player, update_sector
 
         self.check.can_player_get_trader(player_id, sector_id, product_cards_ids)
 
@@ -97,9 +88,6 @@ class GameEngine:
         sector.traders.add(trader)
         sector.save()
         self.charge_player(player, amount)
-
-        update_player(player_id)
-        update_sector(sector_id)
 
         self.game.queue.next_turn()
 
