@@ -34,8 +34,6 @@ class GetTraderCommand(PhaseCommand):
 
 class MakeSalesCommand(PhaseCommand):
     def execute(self, game_engine):
-        print("👉🏻MakeSalesCommand")
-
         active_player = game_engine.game.active_player
 
         for trader in active_player.traders.all():
@@ -51,6 +49,7 @@ class PaycheckCommand(PhaseCommand):
         for trader in active_player.traders.all():
             active_player.coins -= TRADER_SALARY
         active_player.save()
+        game_engine.game.queue.next_turn()
 
 
 class GameEngine:
@@ -68,7 +67,6 @@ class GameEngine:
         self.check = GameRulesChecker(self.game)
 
     def create_trader(self, player_id, sector_id, product_cards_ids):
-
 
         self.check.can_player_get_trader(player_id, sector_id, product_cards_ids)
 
@@ -98,10 +96,8 @@ class GameEngine:
         player.save()
 
     def handle_phase(self):
-        print("👉🏻handle_phase",self.game.queue.phase )
         func = self.phase_dispatch.get(self.game.queue.phase)
         if func:
-            print("👉🏻func, func")
             func.execute(self)
         else:
             print(f"Unknown phase: {self.game.current_phase}")

@@ -10,7 +10,6 @@ from app.services import GameResourcesCreator
 from app.services.game_engine import GameEngine
 
 
-
 class Game(models.Model):
     players_count = models.IntegerField(default=2, validators=[MaxValueValidator(MAX_PLAYERS)])
     trader_capacity = models.IntegerField(default=2)
@@ -55,23 +54,23 @@ class GameQueue(models.Model):
         self.save()
 
     def next_turn(self):
-        from app.schema.subscriptions.subscription import update_queue
         self.players_order_index += 1
         if self.players_order_index == len(self.players_order_ids):
-            self.players_order_index = 0
             self.next_phase()
-        self.active_player_id = self.players_order_ids[self.players_order_index]
-        update_queue(self)
-        engine = GameEngine(self.game)
-        print("👉🏻next_turn", self.players_order_index)
-        engine.handle_phase()
-
-
-        self.save()
+        else:
+            self.active_player_id = self.players_order_ids[self.players_order_index]
+            self.save()
+            engine = GameEngine(self.game)
+            engine.handle_phase()
 
     def next_phase(self):
+        self.players_order_index = 0
+        self.active_player_id = self.players_order_ids[self.players_order_index]
         self.phase = PHASE_ORDER[self.phase]
-        print("👉🏻self.phase", self.phase)
+        self.save()
+        engine = GameEngine(self.game)
+        engine.handle_phase()
+
 
     def reset(self):
         self.phase = PHASE_CHOICES[0][0]
