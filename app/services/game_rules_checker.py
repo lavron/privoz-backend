@@ -11,7 +11,7 @@ class GameRulesChecker:
         check.player_turn(player_id)
         check.player_can_buy(player_id, product_cards_ids)
         check.sector_spots_available(sector_id)
-        check.sector_for_products(sector_id, product_cards_ids)
+        # check.sector_for_products(sector_id, product_cards_ids)
 
     def phase(self, current_phase):
         if current_phase != self.game.queue.phase:
