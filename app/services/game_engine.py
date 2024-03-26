@@ -35,10 +35,15 @@ class GetTraderCommand(PhaseCommand):
 class MakeSalesCommand(PhaseCommand):
     def execute(self, game_engine):
         active_player = game_engine.game.active_player
+        premium_sector = active_player.hero.premium_sector
+        sector_bonus = 1
 
         for trader in active_player.traders.all():
             for product_card in trader.product_cards.all():
                 active_player.coins += product_card.product.sell_price
+                if product_card.sector == premium_sector:
+                    active_player.coins += sector_bonus
+            trader.delete()
         active_player.save()
         game_engine.game.queue.next_turn()
 
