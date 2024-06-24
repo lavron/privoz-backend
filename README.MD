@@ -22,6 +22,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the terms of the MIT License.
 
+## Thanks
+
+Developer is grateful to ChatGPT for providing such a readme.
+
 ## About the Developer
 
 The developer, @lavron, is a passionate and experienced full-stack software engineer with a deep interest in board games and real-time applications. Eager to take on challenging problems, combine cutting-edge technology stacks, and contribute to innovative projects.
